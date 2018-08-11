@@ -4,16 +4,16 @@
 
 r"\\documentclass\[sigconf\]\{acmart\}"
 
-r"\\usepackage\{balance\}"
-r"\\usepackage\{graphicx\}"
+r"\\usepackage\{balance\}" #For balancing the heights of specific pages in two-column mode 
+r"\\usepackage\{graphicx\}" # For dealing with images
 
 r"\\usepackage\{url\}"  
-r"\\usepackage\{amsmath\}"
+r"\\usepackage\{amsmath\}" # For dealing with equations - AMS (American Mathematical Society)
 r"\\usepackage\{mathtools\}"
-r"\\usepackage\{tabularx\}"
+r"\\usepackage\{tabularx\}" # For dealing with tables
 
-r"\\usepackage\{caption\}"
-r"\\usepackage\{subcaption\}"
+r"\\usepackage\{caption\}" #For sideways captioning, continuous captioning, etc etc
+r"\\usepackage\{subcaption\}" #Same as above, but for subcaptioning
 
 r"\\usepackage\{multirow\}"
 
@@ -55,14 +55,39 @@ r"\\subsection\*\{.*\}" #Subsection
 
 r"\\label\{eq:.*\}" #Label - Equation
 r"\\label\{sec:.*\}" #Label - Section
+r"\\label\{sec:.*\}" #Label - Figure
 r"\\ref\{sec:.*\}" #Referencing Section
+r"\\ref\{fig:.*\}" #Referencing Figure
 r"\\eqref\{.*\}" #Referencing Equation
 
-
+#Graphics
 r"\\includegraphics\[.*\]\{.*\}" #with params, filename
 r"width.*\\textwidth" #width parameter
 r"angle[ \t]*=[ \t]*[0-9]+" #angle parameter (Rotation in degrees, counter clockwise)
 r"\\includegraphics\{.*\}" #with filename (default setting)
+r"\\caption\{.*\}" #caption of image
+#Use \begin{figure} if the images have to be labelled in sequence
+r"\\begin\{figure\}" #Begin figure
+r"\\centering" #Obvio
+r"\\end\{figure\}" #End figure
+
+
+#Tables
+r"\\begin\{tabular\}\{.*\}" #Starting of non-inline equation
+"""
+Content inside the curly braces (the ones after tabular of course) - sequence of 'l's and 'r's denoting the text alignment of the corresponding columns
+l - left alignment
+r - right alignment
+If the sequence is like 'lrr', there are no vertical lines
+If the sequence is like '|l|r|r|', there are vertical lines
+If the sequence is like '|lr|r|', there is no vertical line between the first and the second line
+"""
+r"\\end\{tabular\}" #Ending of non-inline equation
+r"&" #The endpoint between two specific cells in a particular row
+
+
+#URL
+#!IMPORTANT! - # $ % & ~ _ ^ \ { } : Following characters have special meanings in URL, and need to be escaped.
 
 #MATHEMATICS
 
