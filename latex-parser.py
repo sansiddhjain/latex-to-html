@@ -1,45 +1,52 @@
-from pyparsing import Literal, CaselessLiteral, Word, delimitedList, Optional, Regex
+import ply.lex as lex
+import ply.yacc as yacc
+
+tokens = [ 'NEWLINE','UL_ST','UL_EN','OL_ST','OL_EN', 'ITEM_ST', 'TEXT' ]
+
+t_ignore = r'[\t \n]+'
+t_NEWLINE = r'\\'
+t_OL_ST = r"\\begin\{enumerate\}"
+t_OL_EN = r"\\end\{enumerate\}"
+t_UL_ST = r"\\begin\{itemize\}"
+t_UL_EN = r"\\end\{itemize\}"
+t_ITEM_ST = r"\\item"
+t_TEXT = r"[a-zA-Z0-9_,. ]+"
+
+def t_error(t):
+    raise TypeError("Unknown text '%s'" % (t.value,))
 
 
-r"\\begin\{document\}"	#Starting of document
-r"\\end\{document\}"	#End of document
-r"[ \t]+"	#Whitespace
-r"[\n]"		#New line
-r"\\"		#New line
-r"``.*\'\'"	#Text in Double Quotes
-r"`.*\'"	#Text in Single Quotes
-r"\\#"		#Hash
-r"\\%"		#Percentage
-r"\\\$"		#Dollar Sign
-r"\\&"		#Ampersand
+lex.lex()
 
-r"\\begin\{abstract\}" #Begin abstract
-r"\\end\{abstract\}" #End abstract
+#YACC waala part
 
-r"\\title\{.*\}" #Title - extract title name
-r"\\author\{.*\}" #Author - extract author name
+def p_ul(p):
+	'''ul : UL_ST list UL_EN'''
+	print p[1]
+	print p[2]
+	print p[3]
 
+def p_ol(p):
+	'''ol : OL_ST list OL_EN'''
+	print p[1]
+	print p[2]
+	print p[3]
 
-list = Forward()
+def p_list(p):
+	'''list : list listitem
+				| listitem'''
 
-ul_st = Regex(r"\\begin\{itemize\}").setName('ul_st') #Begin unordered list
-ul_en = Regex(r"\\end\{itemize\}").setName('ul_en') #End unordered list
+def p_listitem(p):
+	'''listitem : ITEM_ST TEXT'''
 
-ol_st = Regex(r"\\begin\{enumerate\}").setName('ol_st') #Begin ordered list
-ol_en = Regex(r"\\end\{enumerate\}").setName('ol_en') #End ordered list
+def p_error(p):
+    print "Syntax error at '%s'" % p.value
 
-item = Regex(r"\\item.*").setName('item')
+yacc.yacc()
+file = open('latex-examples/test.tex', 'r')
 
-ul = Group(ul_st + OneOrMore(item) + ul_en).setName('ul')
-ol = Group(ol_st + OneOrMore(item) + ol_en).setName('ol')
-
-list << OneOrMore(ul | ol).setName('list')
-list.verbose_stacktrace = True
-list.parseString()
-
-r"\\section\{.*\}" #Section
-r"\\subsection\{.*\}" #Subsection
-r"\\section\*\{.*\}" #Section
-r"\\subsection\*\{.*\}" #Subsection
-
-inp = "\begin{enumerate}\n\item Like this,\n\item and like this.\n \end{enumerate} \n\dots or bullet points \dots\n \begin{itemize}\n \item Like this,\n \item and like this.\n \end{itemize}\n"
+# data_test = "\\begin{enumerate}\n\\item Like this,\n\\item and like this.\n\\end{enumerate}\n\\dots or bullet points \\dots\n\\begin{itemize}\n\\item Like this,\n\\item and like this.\n\\end{itemize}"
+data = file.readlines()
+data = ''.join(data)
+t = yacc.parse(data)
+# print t

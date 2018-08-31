@@ -1,210 +1,110 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    NEWLINE
+
 Grammar
 
-Rule 0     S' -> assign
-Rule 1     assign -> NAME EQUALS expr
-Rule 2     expr -> expr PLUS term
-Rule 3     expr -> expr MINUS term
-Rule 4     expr -> term
-Rule 5     term -> term TIMES factor
-Rule 6     term -> term DIVIDE factor
-Rule 7     term -> factor
-Rule 8     factor -> NUMBER
+Rule 0     S' -> ul
+Rule 1     ul -> UL_ST list UL_EN
+Rule 2     ol -> OL_ST list OL_EN
+Rule 3     list -> list listitem
+Rule 4     list -> listitem
+Rule 5     listitem -> ITEM_ST TEXT
 
 Terminals, with rules where they appear
 
-DIVIDE               : 6
-EQUALS               : 1
-MINUS                : 3
-NAME                 : 1
-NUMBER               : 8
-PLUS                 : 2
-TIMES                : 5
+ITEM_ST              : 5
+NEWLINE              : 
+OL_EN                : 2
+OL_ST                : 2
+TEXT                 : 5
+UL_EN                : 1
+UL_ST                : 1
 error                : 
 
 Nonterminals, with rules where they appear
 
-assign               : 0
-expr                 : 1 2 3
-factor               : 5 6 7
-term                 : 2 3 4 5 6
+list                 : 1 2 3
+listitem             : 3 4
+ol                   : 
+ul                   : 0
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . assign
-    (1) assign -> . NAME EQUALS expr
+    (0) S' -> . ul
+    (1) ul -> . UL_ST list UL_EN
 
-    NAME            shift and go to state 2
+    UL_ST           shift and go to state 2
 
-    assign                         shift and go to state 1
+    ul                             shift and go to state 1
 
 state 1
 
-    (0) S' -> assign .
+    (0) S' -> ul .
 
 
 
 state 2
 
-    (1) assign -> NAME . EQUALS expr
+    (1) ul -> UL_ST . list UL_EN
+    (3) list -> . list listitem
+    (4) list -> . listitem
+    (5) listitem -> . ITEM_ST TEXT
 
-    EQUALS          shift and go to state 3
+    ITEM_ST         shift and go to state 3
 
+    list                           shift and go to state 4
+    listitem                       shift and go to state 5
 
 state 3
 
-    (1) assign -> NAME EQUALS . expr
-    (2) expr -> . expr PLUS term
-    (3) expr -> . expr MINUS term
-    (4) expr -> . term
-    (5) term -> . term TIMES factor
-    (6) term -> . term DIVIDE factor
-    (7) term -> . factor
-    (8) factor -> . NUMBER
+    (5) listitem -> ITEM_ST . TEXT
 
-    NUMBER          shift and go to state 5
+    TEXT            shift and go to state 6
 
-    expr                           shift and go to state 6
-    term                           shift and go to state 4
-    factor                         shift and go to state 7
 
 state 4
 
-    (4) expr -> term .
-    (5) term -> term . TIMES factor
-    (6) term -> term . DIVIDE factor
+    (1) ul -> UL_ST list . UL_EN
+    (3) list -> list . listitem
+    (5) listitem -> . ITEM_ST TEXT
 
-    PLUS            reduce using rule 4 (expr -> term .)
-    MINUS           reduce using rule 4 (expr -> term .)
-    $end            reduce using rule 4 (expr -> term .)
-    TIMES           shift and go to state 9
-    DIVIDE          shift and go to state 8
+    UL_EN           shift and go to state 7
+    ITEM_ST         shift and go to state 3
 
+    listitem                       shift and go to state 8
 
 state 5
 
-    (8) factor -> NUMBER .
+    (4) list -> listitem .
 
-    TIMES           reduce using rule 8 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 8 (factor -> NUMBER .)
-    PLUS            reduce using rule 8 (factor -> NUMBER .)
-    MINUS           reduce using rule 8 (factor -> NUMBER .)
-    $end            reduce using rule 8 (factor -> NUMBER .)
+    UL_EN           reduce using rule 4 (list -> listitem .)
+    ITEM_ST         reduce using rule 4 (list -> listitem .)
 
 
 state 6
 
-    (1) assign -> NAME EQUALS expr .
-    (2) expr -> expr . PLUS term
-    (3) expr -> expr . MINUS term
+    (5) listitem -> ITEM_ST TEXT .
 
-    $end            reduce using rule 1 (assign -> NAME EQUALS expr .)
-    PLUS            shift and go to state 10
-    MINUS           shift and go to state 11
+    UL_EN           reduce using rule 5 (listitem -> ITEM_ST TEXT .)
+    ITEM_ST         reduce using rule 5 (listitem -> ITEM_ST TEXT .)
 
 
 state 7
 
-    (7) term -> factor .
+    (1) ul -> UL_ST list UL_EN .
 
-    TIMES           reduce using rule 7 (term -> factor .)
-    DIVIDE          reduce using rule 7 (term -> factor .)
-    PLUS            reduce using rule 7 (term -> factor .)
-    MINUS           reduce using rule 7 (term -> factor .)
-    $end            reduce using rule 7 (term -> factor .)
+    $end            reduce using rule 1 (ul -> UL_ST list UL_EN .)
 
 
 state 8
 
-    (6) term -> term DIVIDE . factor
-    (8) factor -> . NUMBER
+    (3) list -> list listitem .
 
-    NUMBER          shift and go to state 5
-
-    factor                         shift and go to state 12
-
-state 9
-
-    (5) term -> term TIMES . factor
-    (8) factor -> . NUMBER
-
-    NUMBER          shift and go to state 5
-
-    factor                         shift and go to state 13
-
-state 10
-
-    (2) expr -> expr PLUS . term
-    (5) term -> . term TIMES factor
-    (6) term -> . term DIVIDE factor
-    (7) term -> . factor
-    (8) factor -> . NUMBER
-
-    NUMBER          shift and go to state 5
-
-    term                           shift and go to state 14
-    factor                         shift and go to state 7
-
-state 11
-
-    (3) expr -> expr MINUS . term
-    (5) term -> . term TIMES factor
-    (6) term -> . term DIVIDE factor
-    (7) term -> . factor
-    (8) factor -> . NUMBER
-
-    NUMBER          shift and go to state 5
-
-    term                           shift and go to state 15
-    factor                         shift and go to state 7
-
-state 12
-
-    (6) term -> term DIVIDE factor .
-
-    TIMES           reduce using rule 6 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 6 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 6 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 6 (term -> term DIVIDE factor .)
-    $end            reduce using rule 6 (term -> term DIVIDE factor .)
-
-
-state 13
-
-    (5) term -> term TIMES factor .
-
-    TIMES           reduce using rule 5 (term -> term TIMES factor .)
-    DIVIDE          reduce using rule 5 (term -> term TIMES factor .)
-    PLUS            reduce using rule 5 (term -> term TIMES factor .)
-    MINUS           reduce using rule 5 (term -> term TIMES factor .)
-    $end            reduce using rule 5 (term -> term TIMES factor .)
-
-
-state 14
-
-    (2) expr -> expr PLUS term .
-    (5) term -> term . TIMES factor
-    (6) term -> term . DIVIDE factor
-
-    PLUS            reduce using rule 2 (expr -> expr PLUS term .)
-    MINUS           reduce using rule 2 (expr -> expr PLUS term .)
-    $end            reduce using rule 2 (expr -> expr PLUS term .)
-    TIMES           shift and go to state 9
-    DIVIDE          shift and go to state 8
-
-
-state 15
-
-    (3) expr -> expr MINUS term .
-    (5) term -> term . TIMES factor
-    (6) term -> term . DIVIDE factor
-
-    PLUS            reduce using rule 3 (expr -> expr MINUS term .)
-    MINUS           reduce using rule 3 (expr -> expr MINUS term .)
-    $end            reduce using rule 3 (expr -> expr MINUS term .)
-    TIMES           shift and go to state 9
-    DIVIDE          shift and go to state 8
+    UL_EN           reduce using rule 3 (list -> list listitem .)
+    ITEM_ST         reduce using rule 3 (list -> list listitem .)
 

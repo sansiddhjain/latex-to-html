@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'DIVIDE EQUALS MINUS NAME NUMBER PLUS TIMESassign : NAME EQUALS exprexpr : expr PLUS termexpr : expr MINUS termexpr : termterm : term TIMES factor\n\t\t\t| term DIVIDE factorterm : factorfactor : NUMBER'
+_lr_signature = 'ITEM_ST NEWLINE OL_EN OL_ST TEXT UL_EN UL_STul : UL_ST list UL_ENol : OL_ST list OL_ENlist : list listitem\n\t\t\t\t| listitemlistitem : ITEM_ST TEXT'
     
-_lr_action_items = {'NAME':([0,],[2,]),'NUMBER':([3,8,9,10,11,],[5,5,5,5,5,]),'EQUALS':([2,],[3,]),'PLUS':([4,5,6,7,12,13,14,15,],[-4,-8,10,-7,-6,-5,-2,-3,]),'TIMES':([4,5,7,12,13,14,15,],[9,-8,-7,-6,-5,9,9,]),'MINUS':([4,5,6,7,12,13,14,15,],[-4,-8,11,-7,-6,-5,-2,-3,]),'$end':([1,4,5,6,7,12,13,14,15,],[0,-4,-8,-1,-7,-6,-5,-2,-3,]),'DIVIDE':([4,5,7,12,13,14,15,],[8,-8,-7,-6,-5,8,8,]),}
+_lr_action_items = {'TEXT':([3,],[6,]),'UL_ST':([0,],[2,]),'ITEM_ST':([2,4,5,6,8,],[3,3,-4,-5,-3,]),'UL_EN':([4,5,6,8,],[7,-4,-5,-3,]),'$end':([1,7,],[0,-1,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expr':([3,],[6,]),'term':([3,10,11,],[4,14,15,]),'assign':([0,],[1,]),'factor':([3,8,9,10,11,],[7,12,13,7,7,]),}
+_lr_goto_items = {'ul':([0,],[1,]),'list':([2,],[4,]),'listitem':([2,4,],[5,8,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,13 +26,10 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> assign","S'",1,None,None,None),
-  ('assign -> NAME EQUALS expr','assign',3,'p_assign','lex-yacc-ex.py',25),
-  ('expr -> expr PLUS term','expr',3,'p_expr_plus','lex-yacc-ex.py',29),
-  ('expr -> expr MINUS term','expr',3,'p_expr_minus','lex-yacc-ex.py',33),
-  ('expr -> term','expr',1,'p_expr_term','lex-yacc-ex.py',37),
-  ('term -> term TIMES factor','term',3,'p_term_mul','lex-yacc-ex.py',41),
-  ('term -> term DIVIDE factor','term',3,'p_term_mul','lex-yacc-ex.py',42),
-  ('term -> factor','term',1,'p_term_factor','lex-yacc-ex.py',46),
-  ('factor -> NUMBER','factor',1,'p_factor','lex-yacc-ex.py',50),
+  ("S' -> ul","S'",1,None,None,None),
+  ('ul -> UL_ST list UL_EN','ul',3,'p_ul','latex-parser.py',21),
+  ('ol -> OL_ST list OL_EN','ol',3,'p_ol','latex-parser.py',27),
+  ('list -> list listitem','list',2,'p_list','latex-parser.py',33),
+  ('list -> listitem','list',1,'p_list','latex-parser.py',34),
+  ('listitem -> ITEM_ST TEXT','listitem',2,'p_listitem','latex-parser.py',37),
 ]
