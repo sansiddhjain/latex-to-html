@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ITEM_ST NEWLINE OL_EN OL_ST TEXT UL_EN UL_STul : UL_ST list UL_ENol : OL_ST list OL_ENlist : list listitem\n\t\t\t\t| listitemlistitem : ITEM_ST TEXT'
+_lr_signature = 'DOTS ITEM_ST NEWLINE OL_EN OL_ST TEXT UL_EN UL_STol : OL_ST list OL_ENul : UL_ST list UL_ENlistitem : ITEM_ST TEXTlist : list listitemlist : listitem'
     
-_lr_action_items = {'TEXT':([3,],[6,]),'UL_ST':([0,],[2,]),'ITEM_ST':([2,4,5,6,8,],[3,3,-4,-5,-3,]),'UL_EN':([4,5,6,8,],[7,-4,-5,-3,]),'$end':([1,7,],[0,-1,]),}
+_lr_action_items = {'OL_EN':([4,5,6,7,],[8,-5,-3,-4,]),'TEXT':([3,],[6,]),'ITEM_ST':([2,4,5,6,7,],[3,3,-5,-3,-4,]),'OL_ST':([0,],[2,]),'$end':([1,8,],[0,-1,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'ul':([0,],[1,]),'list':([2,],[4,]),'listitem':([2,4,],[5,8,]),}
+_lr_goto_items = {'ol':([0,],[1,]),'list':([2,],[4,]),'listitem':([2,4,],[5,7,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,10 +26,10 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> ul","S'",1,None,None,None),
-  ('ul -> UL_ST list UL_EN','ul',3,'p_ul','latex-parser.py',21),
-  ('ol -> OL_ST list OL_EN','ol',3,'p_ol','latex-parser.py',27),
-  ('list -> list listitem','list',2,'p_list','latex-parser.py',33),
-  ('list -> listitem','list',1,'p_list','latex-parser.py',34),
-  ('listitem -> ITEM_ST TEXT','listitem',2,'p_listitem','latex-parser.py',37),
+  ("S' -> ol","S'",1,None,None,None),
+  ('ol -> OL_ST list OL_EN','ol',3,'p_ol','latex-parser.py',33),
+  ('ul -> UL_ST list UL_EN','ul',3,'p_ul','latex-parser.py',39),
+  ('listitem -> ITEM_ST TEXT','listitem',2,'p_listitem','latex-parser.py',45),
+  ('list -> list listitem','list',2,'p_list_multi','latex-parser.py',49),
+  ('list -> listitem','list',1,'p_list_unary','latex-parser.py',53),
 ]
