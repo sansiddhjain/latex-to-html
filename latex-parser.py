@@ -3,7 +3,7 @@ import ply.yacc as yacc
 
 tokens = [ 'NEWLINE','UL_ST','UL_EN','OL_ST','OL_EN', 'ITEM_ST', 'TEXT' ]
 
-t_ignore = r'[\t \n]+'
+t_ignore = " \t\r\n"
 t_NEWLINE = r'\\'
 t_OL_ST = r"\\begin\{enumerate\}"
 t_OL_EN = r"\\end\{enumerate\}"
@@ -17,6 +17,14 @@ def t_error(t):
 
 
 lex.lex()
+
+# data_test = "\\begin{enumerate}\n\\item Like this,\n\\item and like this.\n\\end{enumerate}\n\\dots or bullet points \\dots\n\\begin{itemize}\n\\item Like this,\n\\item and like this.\n\\end{itemize}"
+file = open('latex-examples/test.tex', 'r')
+data = file.readlines()
+data = ''.join(data)
+lex.input(data)
+for tok in iter(lex.token, None):
+    print repr(tok.type), repr(tok.value)
 
 #YACC waala part
 
