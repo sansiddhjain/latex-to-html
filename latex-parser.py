@@ -28,9 +28,15 @@ for tok in iter(lex.token, None):
     print repr(tok.type), repr(tok.value)
 
 #YACC waala part
+def p_doc(p):
+	'''doc : doc ul
+		   | doc ol
+		   | ol
+		   | ul'''
+	print "document found"
 
-def p_pexp(p):
-	'''pexp : p_ol | p_ul'''
+#def p_pexp(p):
+#	'''pexp : pol | p_ul'''
 
 def p_ol(p):
 	'''ol : OL_ST list OL_EN'''
