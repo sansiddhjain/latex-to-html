@@ -2,7 +2,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 tokens = [ 'NEWLINE','UL_ST','UL_EN','OL_ST','OL_EN', 'ITEM_ST', 'TEXT', 'DOTS', 'UNDERLINE', 'BOLD', 'ITALICS', 'SECTION', 'SUBSECTION', 'USEPACKAGE', \
- 'USEPACKAGEPARAM', 'BODY', 'TITLE', 'HREF', 'URL', 'DOLLAR', 'NEWLINEMATHSTART', 'NEWLINEMATHEND', 'LATEX' ]
+ 'USEPACKAGEPARAM', 'BODY', 'TITLE', 'HREF', 'URL', 'DOLLAR', 'NEWLINEMATHSTART', 'NEWLINEMATHEND', 'LATEX', 'DOUBLEQUOTESSTART', 'DOUBLEQUOTESEND' ]
 
 t_NEWLINE = r'\\\\'
 t_DOTS = r'\\dots'
@@ -29,6 +29,8 @@ t_DOLLAR = r"\$"
 t_NEWLINEMATHSTART = r"\\\["
 t_NEWLINEMATHEND = r"\\\]"
 t_LATEX = r"\\LaTeX{}"
+t_DOUBLEQUOTESSTART = r"``"
+t_DOUBLEQUOTESEND = r"''"
 t_ignore = " \t\r\n"
 
 def t_error(t):
