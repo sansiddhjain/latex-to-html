@@ -40,7 +40,7 @@ Rule 18    subsectioncon -> ol
 Rule 19    subsectioncon -> ul
 Rule 20    ol -> OL_ST list OL_EN
 Rule 21    ul -> UL_ST list UL_EN
-Rule 22    listitem -> ITEM_ST TEXT
+Rule 22    listitem -> ITEM_ST sentence
 Rule 23    list -> list listitem
 Rule 24    list -> listitem
 Rule 25    sentence -> UNDERLINE LCURLY sentence RCURLY sentence
@@ -75,7 +75,7 @@ PAR                  :
 RCURLY               : 7 11 25 26 27
 SECTION              : 7
 SUBSECTION           : 11
-TEXT                 : 22 28 29 30
+TEXT                 : 28 29 30
 TITLE                : 2
 UL_EN                : 21
 UL_ST                : 21
@@ -92,7 +92,7 @@ list                 : 20 21 23
 listitem             : 23 24
 ol                   : 16 18
 section              : 5 7 8
-sentence             : 7 10 11 14 17 25 25 26 26 27 27 28 29
+sentence             : 7 10 11 14 17 22 25 25 26 26 27 27 28 29
 subsection           : 8 9 11 12
 subsectioncon        : 12 13 14 15 16
 ul                   : 15 19
@@ -234,6 +234,9 @@ state 3
     SECTION         reduce using rule 30 (sentence -> TEXT .)
     OL_ST           reduce using rule 30 (sentence -> TEXT .)
     UL_ST           reduce using rule 30 (sentence -> TEXT .)
+    UL_EN           reduce using rule 30 (sentence -> TEXT .)
+    ITEM_ST         reduce using rule 30 (sentence -> TEXT .)
+    OL_EN           reduce using rule 30 (sentence -> TEXT .)
     UNDERLINE       shift and go to state 14
     BOLD            shift and go to state 17
     ITALICS         shift and go to state 1
@@ -258,7 +261,7 @@ state 5
     (21) ul -> UL_ST . list UL_EN
     (23) list -> . list listitem
     (24) list -> . listitem
-    (22) listitem -> . ITEM_ST TEXT
+    (22) listitem -> . ITEM_ST sentence
 
     ITEM_ST         shift and go to state 25
 
@@ -270,7 +273,7 @@ state 6
     (20) ol -> OL_ST . list OL_EN
     (23) list -> . list listitem
     (24) list -> . listitem
-    (22) listitem -> . ITEM_ST TEXT
+    (22) listitem -> . ITEM_ST sentence
 
     ITEM_ST         shift and go to state 25
 
@@ -747,6 +750,9 @@ state 22
     ITALICS         reduce using rule 28 (sentence -> sentence TEXT .)
     OL_ST           reduce using rule 28 (sentence -> sentence TEXT .)
     UL_ST           reduce using rule 28 (sentence -> sentence TEXT .)
+    UL_EN           reduce using rule 28 (sentence -> sentence TEXT .)
+    ITEM_ST         reduce using rule 28 (sentence -> sentence TEXT .)
+    OL_EN           reduce using rule 28 (sentence -> sentence TEXT .)
 
 
 state 23
@@ -768,6 +774,9 @@ state 23
     ITALICS         reduce using rule 29 (sentence -> TEXT sentence .)
     OL_ST           reduce using rule 29 (sentence -> TEXT sentence .)
     UL_ST           reduce using rule 29 (sentence -> TEXT sentence .)
+    UL_EN           reduce using rule 29 (sentence -> TEXT sentence .)
+    ITEM_ST         reduce using rule 29 (sentence -> TEXT sentence .)
+    OL_EN           reduce using rule 29 (sentence -> TEXT sentence .)
     TEXT            shift and go to state 22
 
   ! TEXT            [ reduce using rule 29 (sentence -> TEXT sentence .) ]
@@ -792,16 +801,26 @@ state 24
 
 state 25
 
-    (22) listitem -> ITEM_ST . TEXT
+    (22) listitem -> ITEM_ST . sentence
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
 
-    TEXT            shift and go to state 46
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
 
+    sentence                       shift and go to state 46
 
 state 26
 
     (21) ul -> UL_ST list . UL_EN
     (23) list -> list . listitem
-    (22) listitem -> . ITEM_ST TEXT
+    (22) listitem -> . ITEM_ST sentence
 
     UL_EN           shift and go to state 47
     ITEM_ST         shift and go to state 25
@@ -821,7 +840,7 @@ state 28
 
     (20) ol -> OL_ST list . OL_EN
     (23) list -> list . listitem
-    (22) listitem -> . ITEM_ST TEXT
+    (22) listitem -> . ITEM_ST sentence
 
     OL_EN           shift and go to state 49
     ITEM_ST         shift and go to state 25
@@ -1192,11 +1211,13 @@ state 45
 
 state 46
 
-    (22) listitem -> ITEM_ST TEXT .
+    (22) listitem -> ITEM_ST sentence .
+    (28) sentence -> sentence . TEXT
 
-    UL_EN           reduce using rule 22 (listitem -> ITEM_ST TEXT .)
-    ITEM_ST         reduce using rule 22 (listitem -> ITEM_ST TEXT .)
-    OL_EN           reduce using rule 22 (listitem -> ITEM_ST TEXT .)
+    UL_EN           reduce using rule 22 (listitem -> ITEM_ST sentence .)
+    ITEM_ST         reduce using rule 22 (listitem -> ITEM_ST sentence .)
+    OL_EN           reduce using rule 22 (listitem -> ITEM_ST sentence .)
+    TEXT            shift and go to state 22
 
 
 state 47
@@ -1419,6 +1440,9 @@ state 58
     ITALICS         reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
     OL_ST           reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
     UL_ST           reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    UL_EN           reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    ITEM_ST         reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    OL_EN           reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
     TEXT            shift and go to state 22
 
   ! TEXT            [ reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .) ]
@@ -1551,6 +1575,9 @@ state 61
     ITALICS         reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
     OL_ST           reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
     UL_ST           reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    UL_EN           reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    ITEM_ST         reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    OL_EN           reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
     TEXT            shift and go to state 22
 
   ! TEXT            [ reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .) ]
@@ -1575,6 +1602,9 @@ state 62
     ITALICS         reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
     OL_ST           reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
     UL_ST           reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    UL_EN           reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    ITEM_ST         reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    OL_EN           reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
     TEXT            shift and go to state 22
 
   ! TEXT            [ reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .) ]

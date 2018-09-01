@@ -1,6 +1,7 @@
 import ply.lex as lex
 import ply.yacc as yacc
 from anytree import Node, RenderTree
+import copy
 
 class Node:
 	def __init__(self,type,children=None,value=None):
@@ -25,6 +26,169 @@ class Node:
 				else:
 					print child
 
+	def convertToHTMLTree(self):
+		if (self.type == 'document-entity') and (not isinstance(self.children[0], Node)):
+			print self.children
+			
+			if '\\documentclass' in self.children[0]:
+				self.type = 'html'
+			print self.children
+			
+			if '\\title' in self.children[0]:
+				xs = self.children[0]
+				value = xs.split('{')[1].split('}')[0]
+				self.type = 'title'
+				self.value = value
+			
+			if '\\author' in self.children[0]:
+				xs = self.children[0]
+				value = xs.split('{')[1].split('}')[0]
+				self.type = 'author'
+				self.value = value
+			
+			if '\\begin{document}' in self.children[0]:
+				xs = self.children[0]
+				value = xs.split('{')[1].split('}')[0]
+				self.type = 'body'
+			# self.children = [self.children[1]]
+
+		if self.type == 'section':
+			self.type = 'h1'
+		if self.type == 'subsection':
+			self.type = 'h3'
+
+		if self.type == 'text-underline':
+			self.type = '<u>'
+		if self.type == 'text-bold':
+			self.type = '<b>'
+		if self.type == 'text-italics':
+			self.type = '<i>'
+
+		if self.children != []:
+			i = 0
+			for child in self.children:
+				i += 1
+			for idx in range(i):
+				if isinstance(self.children[idx], Node):
+					self.children[idx].convertToHTMLTree()
+
+
+	def writeToFile(self, file):
+		# Visit children in if block
+		if self.type == 'html':
+			file.write("<html>\n")
+			if self.children != []:
+				for child in self.children:
+					if isinstance(child, Node):
+						child.writeToFile(file)
+			file.write("</html>\n")
+
+		if self.type == 'title':
+			file.write("<head>\n")
+			file.write("<title>\n")
+			file.write(str(self.value)+"\n")
+			file.write("</title>\n")
+
+
+		if self.type == 'author':
+			file.write('<meta name="author" content="'+str(self.value)+'">\n')
+			file.write("</head>\n")
+
+		# Visit children in if block
+		if self.type == 'body':
+			file.write('<body>\n')
+			if self.children != []:
+				for child in self.children:
+					if isinstance(child, Node):
+						child.writeToFile(file)
+			file.write("</body>\n")
+			
+		# Visit children in if block
+		if 'entity' in self.type:
+			if self.children != []:
+				for child in self.children:
+					if isinstance(child, Node):
+						child.writeToFile(file)
+
+		if self.type == 'h1':
+			file.write("<h1>\n")
+			if not isinstance(self.value, Node):
+				file.write(str(self.value)+"\n")
+			else:
+				self.value.writeToFile(file)
+			file.write("</h1>\n")
+
+		if self.type == 'h3':
+			file.write("<h3>\n")
+			if not isinstance(self.value, Node):
+				file.write(str(self.value)+"\n")
+			else:
+				self.value.writeToFile(file)
+			file.write("</h3>\n")
+
+		if self.type == '<b>':
+			file.write("<b>\n")
+			if not isinstance(self.value, Node):
+				file.write(str(self.value)+"\n")
+			else:
+				self.value.writeToFile(file)
+			file.write("</b>\n")
+
+		if self.type == '<i>':
+			file.write("<i>\n")
+			if not isinstance(self.value, Node):
+				file.write(str(self.value)+"\n")
+			else:
+				self.value.writeToFile(file)
+			file.write("</i>\n")
+
+		if self.type == '<u>':
+			file.write("<u>\n")
+			if not isinstance(self.value, Node):
+				file.write(str(self.value)+"\n")
+			else:
+				self.value.writeToFile(file)
+			file.write("</u>\n")
+
+		if self.type == 'text':
+			if not isinstance(self.value, Node):
+				file.write(str(self.value)+"\n")
+			else:
+				self.value.writeToFile(file)
+		
+		# Visit children in if block
+		if self.type == 'ordered-list':
+			file.write("<ol>\n")
+			if self.children != []:
+				for child in self.children:
+					if isinstance(child, Node):
+						child.writeToFile(file)
+			file.write("</ol>\n")
+
+		# Visit children in if block
+		if self.type == 'unordered-list':
+			file.write("<ul>\n")
+			if self.children != []:
+				for child in self.children:
+					if isinstance(child, Node):
+						child.writeToFile(file)
+			file.write("</ul>\n")
+
+		if self.type == '<li>':
+			file.write("<u>\n")
+			if not isinstance(self.value, Node):
+				file.write(str(self.value)+"\n")
+			else:
+				self.value.writeToFile(file)
+			file.write("</li>\n")
+
+		if not ((self.type == 'html') or (self.type == 'body') or (self.type == 'ordered-list') or (self.type == 'unordered-list') or ('entity' in self.type)):
+			if self.children != []:
+				for child in self.children:
+					if isinstance(child, Node):
+						child.writeToFile(file)
+		
+	
 tokens = ['ENDDOCUMENT','DOCUMENT','TITLE','AUTHOR','NEWLINE','UL_ST','UL_EN','OL_ST','OL_EN','ITEM_ST','TEXT','DOTS','UNDERLINE','BOLD',
 'ITALICS','SECTION','SUBSECTION','USEPACKAGE','USEPACKAGEPARAM','BODY','HREF','URL','DOLLAR','NEWLINEMATHSTART','NEWLINEMATHEND','LATEX',
 'DOUBLEQUOTESSTART','DOUBLEQUOTESEND','LCURLY','RCURLY', 'PAR']
@@ -149,30 +313,6 @@ def p_subsectioncon(p):
 		p[0] = p[1]
 	# print p[0]
 
-# def p_paragraph(p):
-#    '''paragraph : paragraph PAR
-#                 | paragraph sentence
-#                 | paragraph NEWLINE
-#                 | sentence
-#                 | NEWLINE
-#                 | PAR
-#                 '''
-#    try:
-#        p[0] = '<par>' + p[2]
-#    except:
-#        p[0] = p[1]
-#    print "para print:", p[0]
-
-
-# def p_math(p):
-# 	'''math : DOLLAR expr DOLLAR
-# 			| NEWLINEMATHSTART expr NEWLINEMATHEND
-# 			'''
-# 	p[0] = p[2]
-
-# def p_expr(p):
-# 	'''expr : '''
-
 def p_ol(p):
 	'''ol : OL_ST list OL_EN'''
 	# print p[1]
@@ -188,7 +328,7 @@ def p_ul(p):
 	p[0] = Node('unordered-list', children=[p[2]])
 
 def p_listitem(p):
-	'''listitem : ITEM_ST TEXT'''
+	'''listitem : ITEM_ST sentence'''
 	# p[0] = p[1]+' '+ p[2]
 	p[0] = Node('list-item', value=[p[2]])
 
@@ -237,3 +377,8 @@ data = file.readlines()
 data = ''.join(data)
 t = yacc.parse(data)
 print t.preOrder()
+t.convertToHTMLTree()
+
+html_file = open('test.html', 'w')
+t.writeToFile(html_file)
+html_file.close()
