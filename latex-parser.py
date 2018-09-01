@@ -8,8 +8,22 @@ class Node:
 		if children:
 			self.children = children
 		else:
-			self.children = [ ]
+			self.children = []
 		self.value = value
+
+	def preOrder(self):
+		print self.type
+		if self.value != None:
+			if isinstance(self.value, Node):
+				self.value.preOrder()
+			else:
+				print "value :- " + str(self.value)
+		if self.children != []:
+			for child in self.children:
+				if isinstance(child, Node):
+					child.preOrder()
+				else:
+					print child
 
 tokens = ['ENDDOCUMENT','DOCUMENT','TITLE','AUTHOR','NEWLINE','UL_ST','UL_EN','OL_ST','OL_EN','ITEM_ST','TEXT','DOTS','UNDERLINE','BOLD',
 'ITALICS','SECTION','SUBSECTION','USEPACKAGE','USEPACKAGEPARAM','BODY','HREF','URL','DOLLAR','NEWLINEMATHSTART','NEWLINEMATHEND','LATEX',
@@ -73,12 +87,23 @@ def p_document(p):
 				'''
 	try:
 		# print p[1]+";"+p[2]
-		p[0] = p[1]+" ; "+p[2]
-		# p[0] = Node(type='document-entity', children=[p[1], p[2]])
+		# p[0] = p[1]+" ; "+p[2]
+		# if '\\title' in p[1]:
+		# 	value = p[1].split('{')[1].split('}')[0]
+		# 	p[0] = Node(type='title', value=value, children=[p[2]])
+		# elif '\\author' in p[1]:
+		# 	value = p[1].split('{')[1].split('}')[0]
+		# 	p[0] = Node(type='author', value=value, children=[p[2]])
+		# elif '\\begin{document}' in p[1]:
+		# 	p[0] = Node(type='body', children=[p[2]])
+		# elif '\\documentclass' in p[1]:
+		# 	p[0] = Node(type='html', children=[p[2]])
+		# else:
+		p[0] = Node(type='document-entity', children=[p[1], p[2]])
 	except:
 		# print "In except block - " + p[1]
-		# p[0] = Node(type='document-end')
-		p[0] = p[1]
+		p[0] = Node(type='document-end')
+		# p[0] = p[1]
 		# print p[0]
 	print p[0]
 
@@ -89,10 +114,10 @@ def p_section(p):
 			   | sentence
 				'''
 	try:
-		p[0] = 'title - ' + p[3] + p[5]
+		p[0] = Node('section', value=p[3], children=[p[5]])
 	except:
 		try :
-			p[0] = p[1] + p[2]
+			p[0] = Node('section-entity', children=[p[1], p[2]])
 		except:
 			p[0] = p[1]
 	# print p[0]
@@ -103,10 +128,10 @@ def p_subsection(p):
 				  | subsectioncon
 				  '''
 	try:
-		p[0] = 'title - ' + p[3] + p[5]
+		p[0] = Node('subsection', value=p[3], children=[p[5]])
 	except:
 		try: 
-			p[0] = p[1] + p[2]
+			p[0] = Node('subsection-entity', children=[p[1], p[2]])
 		except:
 			p[0] = p[1]
 	# print p[0]
@@ -119,7 +144,7 @@ def p_subsectioncon(p):
 					 | ol
 					 | ul'''
 	try:
-		p[0] = p[1] + p[2]
+		p[0] = Node('subsectioncon-entity', children=[p[1], p[2]])
 	except:
 		p[0] = p[1]
 	# print p[0]
@@ -139,34 +164,38 @@ def p_subsectioncon(p):
 #    print "para print:", p[0]
 
 
-def p_math(p):
-	'''math : DOLLAR expr DOLLAR
-			| NEWLINEMATHSTART expr NEWLINEMATHEND
-			'''
-	p[0] = p[2]
+# def p_math(p):
+# 	'''math : DOLLAR expr DOLLAR
+# 			| NEWLINEMATHSTART expr NEWLINEMATHEND
+# 			'''
+# 	p[0] = p[2]
 
-def p_expr(p):
-	'''expr : '''
+# def p_expr(p):
+# 	'''expr : '''
 
 def p_ol(p):
 	'''ol : OL_ST list OL_EN'''
 	# print p[1]
 	# print p[2]
 	# print p[3]
+	p[0] = Node('ordered-list', children=[p[2]])
 
 def p_ul(p):
 	'''ul : UL_ST list UL_EN'''
 	# print p[1]
 	# print p[2]
 	# print p[3]
+	p[0] = Node('unordered-list', children=[p[2]])
 
 def p_listitem(p):
 	'''listitem : ITEM_ST TEXT'''
-	p[0] = p[1]+' '+ p[2]
+	# p[0] = p[1]+' '+ p[2]
+	p[0] = Node('list-item', value=[p[2]])
 
 def p_list_multi(p):
 	'''list : list listitem'''
-	p[0] = p[1]+p[2]
+	# p[0] = p[1]+p[2]
+	p[0] = Node('list-entity', children=[p[1], p[2]])
 
 def p_list_unary(p):
 	'''list : listitem'''
@@ -182,18 +211,20 @@ def p_sentence(p):
 			   '''
    if p[1]=="\\underline":
 	   #p[0] = "<UNDERLINE>" + p[3] +";" + p[5]
-	   p[0] = '<U>' +p[3]+"<\U> "+p[5]
+	   p[0] = Node('text-underline', value=p[3], children=[p[5]])
    elif p[1]=="\\textbf":
 	   #p[0] = "<BOLD>" + p[3] +";" + p[5]
-	   p[0] = '<B>'+ p[3]+"<\B> " +p[5]
+	   p[0] = Node('text-bold', value=p[3], children=[p[5]])
+	   # p[0] = '<B>'+ p[3]+"<\B> " +p[5]
    elif p[1]=="\\textit":
 	   #p[0]="<ITALICS>" + p[3] + ";" + p[5]
-	   p[0] = '<I>'+p[3]+ "<\I> "+ p[5]
+	   p[0] = Node('text-italics', value=p[3], children=[p[5]])
+	   # p[0] = '<I>'+p[3]+ "<\I> "+ p[5]
    else:
 	   try:
-		   p[0]= p[1]+" "+p[2]   
+		   p[0]= Node('text-entity', children=[p[1], p[2]])
 	   except:
-		   p[0]=p[1]
+		   p[0]=Node('text', value=p[1])
    #print p[0]
 
 
@@ -205,4 +236,4 @@ file = open('latex-examples/test.tex', 'r')
 data = file.readlines()
 data = ''.join(data)
 t = yacc.parse(data)
-# print t
+print t.preOrder()
