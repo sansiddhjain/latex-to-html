@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AUTHOR BODY BOLD DOCUMENT DOLLAR DOTS DOUBLEQUOTESEND DOUBLEQUOTESSTART ENDDOCUMENT HREF ITALICS ITEM_ST LATEX LCURLY NEWLINE NEWLINEMATHEND NEWLINEMATHSTART OL_EN OL_ST RCURLY SECTION SUBSECTION TEXT TITLE UL_EN UL_ST UNDERLINE URL USEPACKAGE USEPACKAGEPARAMdocument : DOCUMENT document\n\t\t\t\t| TITLE document\n\t\t\t\t| AUTHOR document\n\t\t\t\t| BODY document\n\t\t\t\t| section document\n\t\t\t\t| ENDDOCUMENT\n\t\t\t\tsubsection : SUBSECTION LCURLY sentence RCURLY subsection\n\t\t\t\t  | subsection subsectioncon\n\t\t\t\t  | subsectioncon\n\t\t\t\t  subsectioncon : subsectioncon sentence\n\t\t\t\t\t | subsectioncon ul\n\t\t\t\t\t | subsectioncon ol\n\t\t\t\t\t | sentence\n\t\t\t\t\t | ol\n\t\t\t\t\t | ulsection : SECTION LCURLY sentence RCURLY section\n\t\t\t   | section subsection\n\t\t\t   | subsection\n\t\t\t   | sentence\n\t\t\t\tol : OL_ST list OL_ENul : UL_ST list UL_ENlistitem : ITEM_ST TEXTlist : list listitemlist : listitemsentence : UNDERLINE LCURLY sentence RCURLY sentence\n\t\t\t   | BOLD LCURLY sentence RCURLY sentence\n\t\t\t   | ITALICS LCURLY sentence RCURLY sentence\n\t\t\t   | sentence TEXT\n\t\t\t   | TEXT sentence\n\t\t\t   | TEXT \n\t\t\t   '
+_lr_signature = 'AUTHOR BODY BOLD DOCUMENT DOLLAR DOTS DOUBLEQUOTESEND DOUBLEQUOTESSTART ENDDOCUMENT HREF ITALICS ITEM_ST LATEX LCURLY NEWLINE NEWLINEMATHEND NEWLINEMATHSTART OL_EN OL_ST PAR RCURLY SECTION SUBSECTION TEXT TITLE UL_EN UL_ST UNDERLINE URL USEPACKAGE USEPACKAGEPARAMdocument : DOCUMENT document\n\t\t\t\t| TITLE document\n\t\t\t\t| AUTHOR document\n\t\t\t\t| BODY document\n\t\t\t\t| section document\n\t\t\t\t| ENDDOCUMENT\n\t\t\t\tsection : SECTION LCURLY sentence RCURLY section\n\t\t\t   | section subsection\n\t\t\t   | subsection\n\t\t\t   | sentence\n\t\t\t\tsubsection : SUBSECTION LCURLY sentence RCURLY subsection\n\t\t\t\t  | subsection subsectioncon\n\t\t\t\t  | subsectioncon\n\t\t\t\t  subsectioncon : subsectioncon sentence\n\t\t\t\t\t | subsectioncon ul\n\t\t\t\t\t | subsectioncon ol\n\t\t\t\t\t | sentence\n\t\t\t\t\t | ol\n\t\t\t\t\t | ulmath : DOLLAR expr DOLLAR\n\t\t\t| NEWLINEMATHSTART expr NEWLINEMATHEND\n\t\t\texpr : ol : OL_ST list OL_ENul : UL_ST list UL_ENlistitem : ITEM_ST TEXTlist : list listitemlist : listitemsentence : UNDERLINE LCURLY sentence RCURLY sentence\n\t\t\t   | BOLD LCURLY sentence RCURLY sentence\n\t\t\t   | ITALICS LCURLY sentence RCURLY sentence\n\t\t\t   | sentence TEXT\n\t\t\t   | TEXT sentence\n\t\t\t   | TEXT\n\t\t\t   '
     
-_lr_action_items = {'BODY':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[16,-13,-30,16,16,16,-9,-18,16,-14,-15,16,-28,-29,-13,-17,-12,-11,-10,-13,-8,-21,-20,-27,-16,-7,-25,-26,-17,]),'ITALICS':([0,2,3,7,8,9,13,15,16,18,19,20,21,22,23,24,30,31,34,35,36,37,38,39,40,42,47,49,53,54,55,56,57,58,59,60,61,62,63,],[1,-13,1,1,1,1,1,1,1,-14,-15,1,1,-28,-29,1,-13,1,1,-12,-11,-10,1,-13,1,1,-21,-20,1,1,1,1,1,-27,1,1,-25,-26,1,]),'BOLD':([0,2,3,7,8,9,13,15,16,18,19,20,21,22,23,24,30,31,34,35,36,37,38,39,40,42,47,49,53,54,55,56,57,58,59,60,61,62,63,],[17,-13,17,17,17,17,17,17,17,-14,-15,17,17,-28,-29,17,-13,17,17,-12,-11,-10,17,-13,17,17,-21,-20,17,17,17,17,17,-27,17,17,-25,-26,17,]),'AUTHOR':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[7,-13,-30,7,7,7,-9,-18,7,-14,-15,7,-28,-29,-13,-17,-12,-11,-10,-13,-8,-21,-20,-27,-16,-7,-25,-26,-17,]),'TEXT':([0,2,3,7,8,9,13,15,16,18,19,20,21,22,23,24,25,30,31,34,35,36,37,38,39,40,42,44,45,47,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,],[3,22,3,3,3,3,3,3,3,-14,-15,3,3,-28,22,3,46,22,3,3,-12,-11,22,3,22,3,3,22,22,-21,-20,22,22,22,3,3,3,3,3,22,3,3,22,22,3,]),'SECTION':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,54,58,59,60,61,62,63,],[4,-13,-30,4,4,4,-9,-18,4,-14,-15,4,-28,-29,-13,-17,-12,-11,-10,-13,-8,-21,-20,4,-27,-16,-7,-25,-26,-17,]),'TITLE':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[9,-13,-30,9,9,9,-9,-18,9,-14,-15,9,-28,-29,-13,-17,-12,-11,-10,-13,-8,-21,-20,-27,-16,-7,-25,-26,-17,]),'RCURLY':([3,22,23,44,45,50,51,52,58,61,62,],[-30,-28,-29,53,54,55,56,57,-27,-25,-26,]),'UL_EN':([26,27,46,48,],[47,-24,-22,-23,]),'LCURLY':([1,4,10,14,17,],[21,24,34,38,42,]),'UL_ST':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,54,55,58,59,60,61,62,63,],[5,-13,-30,5,5,5,5,5,5,-14,-15,5,-28,-29,-13,5,-12,-11,-10,-13,5,-21,-20,5,5,-27,5,5,-25,-26,5,]),'SUBSECTION':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,54,55,58,59,60,61,62,63,],[10,-13,-30,10,10,10,-9,-18,10,-14,-15,10,-28,-29,-13,-17,-12,-11,-10,-13,-8,-21,-20,10,10,-27,10,-7,-25,-26,-17,]),'ITEM_ST':([5,6,26,27,28,46,48,],[25,25,25,-24,25,-22,-23,]),'ENDDOCUMENT':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[11,-13,-30,11,11,11,-9,-18,11,-14,-15,11,-28,-29,-13,-17,-12,-11,-10,-13,-8,-21,-20,-27,-16,-7,-25,-26,-17,]),'OL_EN':([27,28,46,48,],[-24,49,-22,-23,]),'OL_ST':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,54,55,58,59,60,61,62,63,],[6,-13,-30,6,6,6,6,6,6,-14,-15,6,-28,-29,-13,6,-12,-11,-10,-13,6,-21,-20,6,6,-27,6,6,-25,-26,6,]),'DOCUMENT':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[20,-13,-30,20,20,20,-9,-18,20,-14,-15,20,-28,-29,-13,-17,-12,-11,-10,-13,-8,-21,-20,-27,-16,-7,-25,-26,-17,]),'UNDERLINE':([0,2,3,7,8,9,13,15,16,18,19,20,21,22,23,24,30,31,34,35,36,37,38,39,40,42,47,49,53,54,55,56,57,58,59,60,61,62,63,],[14,-13,14,14,14,14,14,14,14,-14,-15,14,14,-28,-29,14,-13,14,14,-12,-11,-10,14,-13,14,14,-21,-20,14,14,14,14,14,-27,14,14,-25,-26,14,]),'$end':([11,12,29,32,33,41,43,],[-6,0,-3,-5,-2,-4,-1,]),}
+_lr_action_items = {'BODY':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[16,-10,-33,16,16,16,-13,-9,16,-18,-19,16,-31,-32,-10,-8,-16,-15,-14,-17,-12,-24,-23,-30,-7,-11,-28,-29,-8,]),'ITALICS':([0,2,3,7,8,9,13,15,16,18,19,20,21,22,23,24,30,31,34,35,36,37,38,39,40,42,47,49,53,54,55,56,57,58,59,60,61,62,63,],[1,-10,1,1,1,1,1,1,1,-18,-19,1,1,-31,-32,1,-10,1,1,-16,-15,-14,1,-17,1,1,-24,-23,1,1,1,1,1,-30,1,1,-28,-29,1,]),'BOLD':([0,2,3,7,8,9,13,15,16,18,19,20,21,22,23,24,30,31,34,35,36,37,38,39,40,42,47,49,53,54,55,56,57,58,59,60,61,62,63,],[17,-10,17,17,17,17,17,17,17,-18,-19,17,17,-31,-32,17,-10,17,17,-16,-15,-14,17,-17,17,17,-24,-23,17,17,17,17,17,-30,17,17,-28,-29,17,]),'AUTHOR':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[7,-10,-33,7,7,7,-13,-9,7,-18,-19,7,-31,-32,-10,-8,-16,-15,-14,-17,-12,-24,-23,-30,-7,-11,-28,-29,-8,]),'TEXT':([0,2,3,7,8,9,13,15,16,18,19,20,21,22,23,24,25,30,31,34,35,36,37,38,39,40,42,44,45,47,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,],[3,22,3,3,3,3,3,3,3,-18,-19,3,3,-31,22,3,46,22,3,3,-16,-15,22,3,22,3,3,22,22,-24,-23,22,22,22,3,3,3,3,3,22,3,3,22,22,3,]),'SECTION':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,54,58,59,60,61,62,63,],[4,-10,-33,4,4,4,-13,-9,4,-18,-19,4,-31,-32,-10,-8,-16,-15,-14,-17,-12,-24,-23,4,-30,-7,-11,-28,-29,-8,]),'TITLE':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[9,-10,-33,9,9,9,-13,-9,9,-18,-19,9,-31,-32,-10,-8,-16,-15,-14,-17,-12,-24,-23,-30,-7,-11,-28,-29,-8,]),'RCURLY':([3,22,23,44,45,50,51,52,58,61,62,],[-33,-31,-32,53,54,55,56,57,-30,-28,-29,]),'UL_EN':([26,27,46,48,],[47,-27,-25,-26,]),'LCURLY':([1,4,10,14,17,],[21,24,34,38,42,]),'UL_ST':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,54,55,58,59,60,61,62,63,],[5,-10,-33,5,5,5,5,5,5,-18,-19,5,-31,-32,-10,5,-16,-15,-14,-17,5,-24,-23,5,5,-30,5,5,-28,-29,5,]),'SUBSECTION':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,54,55,58,59,60,61,62,63,],[10,-10,-33,10,10,10,-13,-9,10,-18,-19,10,-31,-32,-10,-8,-16,-15,-14,-17,-12,-24,-23,10,10,-30,10,-11,-28,-29,-8,]),'ITEM_ST':([5,6,26,27,28,46,48,],[25,25,25,-27,25,-25,-26,]),'ENDDOCUMENT':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[11,-10,-33,11,11,11,-13,-9,11,-18,-19,11,-31,-32,-10,-8,-16,-15,-14,-17,-12,-24,-23,-30,-7,-11,-28,-29,-8,]),'OL_EN':([27,28,46,48,],[-27,49,-25,-26,]),'OL_ST':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,54,55,58,59,60,61,62,63,],[6,-10,-33,6,6,6,6,6,6,-18,-19,6,-31,-32,-10,6,-16,-15,-14,-17,6,-24,-23,6,6,-30,6,6,-28,-29,6,]),'DOCUMENT':([0,2,3,7,8,9,13,15,16,18,19,20,22,23,30,31,35,36,37,39,40,47,49,58,59,60,61,62,63,],[20,-10,-33,20,20,20,-13,-9,20,-18,-19,20,-31,-32,-10,-8,-16,-15,-14,-17,-12,-24,-23,-30,-7,-11,-28,-29,-8,]),'UNDERLINE':([0,2,3,7,8,9,13,15,16,18,19,20,21,22,23,24,30,31,34,35,36,37,38,39,40,42,47,49,53,54,55,56,57,58,59,60,61,62,63,],[14,-10,14,14,14,14,14,14,14,-18,-19,14,14,-31,-32,14,-10,14,14,-16,-15,-14,14,-17,14,14,-24,-23,14,14,14,14,14,-30,14,14,-28,-29,14,]),'$end':([11,12,29,32,33,41,43,],[-6,0,-3,-5,-2,-4,-1,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -27,34 +27,37 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> document","S'",1,None,None,None),
-  ('document -> DOCUMENT document','document',2,'p_document','latex-parser.py',56),
-  ('document -> TITLE document','document',2,'p_document','latex-parser.py',57),
-  ('document -> AUTHOR document','document',2,'p_document','latex-parser.py',58),
-  ('document -> BODY document','document',2,'p_document','latex-parser.py',59),
-  ('document -> section document','document',2,'p_document','latex-parser.py',60),
-  ('document -> ENDDOCUMENT','document',1,'p_document','latex-parser.py',61),
-  ('subsection -> SUBSECTION LCURLY sentence RCURLY subsection','subsection',5,'p_subsection','latex-parser.py',74),
-  ('subsection -> subsection subsectioncon','subsection',2,'p_subsection','latex-parser.py',75),
-  ('subsection -> subsectioncon','subsection',1,'p_subsection','latex-parser.py',76),
-  ('subsectioncon -> subsectioncon sentence','subsectioncon',2,'p_subsectioncon','latex-parser.py',85),
-  ('subsectioncon -> subsectioncon ul','subsectioncon',2,'p_subsectioncon','latex-parser.py',86),
-  ('subsectioncon -> subsectioncon ol','subsectioncon',2,'p_subsectioncon','latex-parser.py',87),
-  ('subsectioncon -> sentence','subsectioncon',1,'p_subsectioncon','latex-parser.py',88),
-  ('subsectioncon -> ol','subsectioncon',1,'p_subsectioncon','latex-parser.py',89),
-  ('subsectioncon -> ul','subsectioncon',1,'p_subsectioncon','latex-parser.py',90),
-  ('section -> SECTION LCURLY sentence RCURLY section','section',5,'p_section','latex-parser.py',98),
-  ('section -> section subsection','section',2,'p_section','latex-parser.py',99),
-  ('section -> subsection','section',1,'p_section','latex-parser.py',100),
-  ('section -> sentence','section',1,'p_section','latex-parser.py',101),
-  ('ol -> OL_ST list OL_EN','ol',3,'p_ol','latex-parser.py',114),
-  ('ul -> UL_ST list UL_EN','ul',3,'p_ul','latex-parser.py',120),
-  ('listitem -> ITEM_ST TEXT','listitem',2,'p_listitem','latex-parser.py',126),
-  ('list -> list listitem','list',2,'p_list_multi','latex-parser.py',130),
-  ('list -> listitem','list',1,'p_list_unary','latex-parser.py',134),
-  ('sentence -> UNDERLINE LCURLY sentence RCURLY sentence','sentence',5,'p_sentence','latex-parser.py',138),
-  ('sentence -> BOLD LCURLY sentence RCURLY sentence','sentence',5,'p_sentence','latex-parser.py',139),
-  ('sentence -> ITALICS LCURLY sentence RCURLY sentence','sentence',5,'p_sentence','latex-parser.py',140),
-  ('sentence -> sentence TEXT','sentence',2,'p_sentence','latex-parser.py',141),
-  ('sentence -> TEXT sentence','sentence',2,'p_sentence','latex-parser.py',142),
-  ('sentence -> TEXT','sentence',1,'p_sentence','latex-parser.py',143),
+  ('document -> DOCUMENT document','document',2,'p_document','latex-parser.py',67),
+  ('document -> TITLE document','document',2,'p_document','latex-parser.py',68),
+  ('document -> AUTHOR document','document',2,'p_document','latex-parser.py',69),
+  ('document -> BODY document','document',2,'p_document','latex-parser.py',70),
+  ('document -> section document','document',2,'p_document','latex-parser.py',71),
+  ('document -> ENDDOCUMENT','document',1,'p_document','latex-parser.py',72),
+  ('section -> SECTION LCURLY sentence RCURLY section','section',5,'p_section','latex-parser.py',86),
+  ('section -> section subsection','section',2,'p_section','latex-parser.py',87),
+  ('section -> subsection','section',1,'p_section','latex-parser.py',88),
+  ('section -> sentence','section',1,'p_section','latex-parser.py',89),
+  ('subsection -> SUBSECTION LCURLY sentence RCURLY subsection','subsection',5,'p_subsection','latex-parser.py',101),
+  ('subsection -> subsection subsectioncon','subsection',2,'p_subsection','latex-parser.py',102),
+  ('subsection -> subsectioncon','subsection',1,'p_subsection','latex-parser.py',103),
+  ('subsectioncon -> subsectioncon sentence','subsectioncon',2,'p_subsectioncon','latex-parser.py',115),
+  ('subsectioncon -> subsectioncon ul','subsectioncon',2,'p_subsectioncon','latex-parser.py',116),
+  ('subsectioncon -> subsectioncon ol','subsectioncon',2,'p_subsectioncon','latex-parser.py',117),
+  ('subsectioncon -> sentence','subsectioncon',1,'p_subsectioncon','latex-parser.py',118),
+  ('subsectioncon -> ol','subsectioncon',1,'p_subsectioncon','latex-parser.py',119),
+  ('subsectioncon -> ul','subsectioncon',1,'p_subsectioncon','latex-parser.py',120),
+  ('math -> DOLLAR expr DOLLAR','math',3,'p_math','latex-parser.py',143),
+  ('math -> NEWLINEMATHSTART expr NEWLINEMATHEND','math',3,'p_math','latex-parser.py',144),
+  ('expr -> <empty>','expr',0,'p_expr','latex-parser.py',149),
+  ('ol -> OL_ST list OL_EN','ol',3,'p_ol','latex-parser.py',152),
+  ('ul -> UL_ST list UL_EN','ul',3,'p_ul','latex-parser.py',158),
+  ('listitem -> ITEM_ST TEXT','listitem',2,'p_listitem','latex-parser.py',164),
+  ('list -> list listitem','list',2,'p_list_multi','latex-parser.py',168),
+  ('list -> listitem','list',1,'p_list_unary','latex-parser.py',172),
+  ('sentence -> UNDERLINE LCURLY sentence RCURLY sentence','sentence',5,'p_sentence','latex-parser.py',176),
+  ('sentence -> BOLD LCURLY sentence RCURLY sentence','sentence',5,'p_sentence','latex-parser.py',177),
+  ('sentence -> ITALICS LCURLY sentence RCURLY sentence','sentence',5,'p_sentence','latex-parser.py',178),
+  ('sentence -> sentence TEXT','sentence',2,'p_sentence','latex-parser.py',179),
+  ('sentence -> TEXT sentence','sentence',2,'p_sentence','latex-parser.py',180),
+  ('sentence -> TEXT','sentence',1,'p_sentence','latex-parser.py',181),
 ]

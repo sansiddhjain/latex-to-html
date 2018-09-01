@@ -2,6 +2,15 @@ import ply.lex as lex
 import ply.yacc as yacc
 from anytree import Node, RenderTree
 
+class Node:
+	def __init__(self,type,children=None,value=None):
+		self.type = type
+		if children:
+			self.children = children
+		else:
+			self.children = [ ]
+		self.value = value
+
 tokens = ['ENDDOCUMENT','DOCUMENT','TITLE','AUTHOR','NEWLINE','UL_ST','UL_EN','OL_ST','OL_EN','ITEM_ST','TEXT','DOTS','UNDERLINE','BOLD',
 'ITALICS','SECTION','SUBSECTION','USEPACKAGE','USEPACKAGEPARAM','BODY','HREF','URL','DOLLAR','NEWLINEMATHSTART','NEWLINEMATHEND','LATEX',
 'DOUBLEQUOTESSTART','DOUBLEQUOTESEND','LCURLY','RCURLY', 'PAR']
@@ -65,11 +74,13 @@ def p_document(p):
 	try:
 		# print p[1]+";"+p[2]
 		p[0] = p[1]+" ; "+p[2]
+		# p[0] = Node(type='document-entity', children=[p[1], p[2]])
 	except:
 		# print "In except block - " + p[1]
+		# p[0] = Node(type='document-end')
 		p[0] = p[1]
 		# print p[0]
-	# print p[0]
+	print p[0]
 
 def p_section(p):
 	'''section : SECTION LCURLY sentence RCURLY section
@@ -163,26 +174,26 @@ def p_list_unary(p):
 
 def p_sentence(p):
    '''sentence : UNDERLINE LCURLY sentence RCURLY sentence
-               | BOLD LCURLY sentence RCURLY sentence
-               | ITALICS LCURLY sentence RCURLY sentence
-               | sentence TEXT
-               | TEXT sentence
-               | TEXT
-               '''
+			   | BOLD LCURLY sentence RCURLY sentence
+			   | ITALICS LCURLY sentence RCURLY sentence
+			   | sentence TEXT
+			   | TEXT sentence
+			   | TEXT
+			   '''
    if p[1]=="\\underline":
-       #p[0] = "<UNDERLINE>" + p[3] +";" + p[5]
-       p[0] = '<U>' +p[3]+"<\U> "+p[5]
+	   #p[0] = "<UNDERLINE>" + p[3] +";" + p[5]
+	   p[0] = '<U>' +p[3]+"<\U> "+p[5]
    elif p[1]=="\\textbf":
-       #p[0] = "<BOLD>" + p[3] +";" + p[5]
-       p[0] = '<B>'+ p[3]+"<\B> " +p[5]
+	   #p[0] = "<BOLD>" + p[3] +";" + p[5]
+	   p[0] = '<B>'+ p[3]+"<\B> " +p[5]
    elif p[1]=="\\textit":
-       #p[0]="<ITALICS>" + p[3] + ";" + p[5]
-       p[0] = '<I>'+p[3]+ "<\I> "+ p[5]
+	   #p[0]="<ITALICS>" + p[3] + ";" + p[5]
+	   p[0] = '<I>'+p[3]+ "<\I> "+ p[5]
    else:
-       try:
-           p[0]= p[1]+" "+p[2]   
-       except:
-           p[0]=p[1]
+	   try:
+		   p[0]= p[1]+" "+p[2]   
+	   except:
+		   p[0]=p[1]
    #print p[0]
 
 
