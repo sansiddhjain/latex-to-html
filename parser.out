@@ -3,204 +3,1694 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     DOTS
+    USEPACKAGEPARAM
+    LATEX
+    HREF
+    NEWLINEMATHSTART
     NEWLINE
+    DOUBLEQUOTESEND
+    USEPACKAGE
+    URL
+    DOUBLEQUOTESSTART
+    DOLLAR
+    NEWLINEMATHEND
 
 Grammar
 
-Rule 0     S' -> doc
-Rule 1     doc -> doc ul
-Rule 2     doc -> doc ol
-Rule 3     doc -> ol
-Rule 4     doc -> ul
-Rule 5     ol -> OL_ST list OL_EN
-Rule 6     ul -> UL_ST list UL_EN
-Rule 7     listitem -> ITEM_ST TEXT
-Rule 8     list -> list listitem
-Rule 9     list -> listitem
+Rule 0     S' -> document
+Rule 1     document -> DOCUMENT document
+Rule 2     document -> TITLE document
+Rule 3     document -> AUTHOR document
+Rule 4     document -> BODY document
+Rule 5     document -> section document
+Rule 6     document -> ENDDOCUMENT
+Rule 7     subsection -> SUBSECTION LCURLY sentence RCURLY subsection
+Rule 8     subsection -> subsection subsectioncon
+Rule 9     subsection -> subsectioncon
+Rule 10    subsectioncon -> subsectioncon sentence
+Rule 11    subsectioncon -> subsectioncon ul
+Rule 12    subsectioncon -> subsectioncon ol
+Rule 13    subsectioncon -> sentence
+Rule 14    subsectioncon -> ol
+Rule 15    subsectioncon -> ul
+Rule 16    section -> SECTION LCURLY sentence RCURLY section
+Rule 17    section -> section subsection
+Rule 18    section -> subsection
+Rule 19    section -> sentence
+Rule 20    ol -> OL_ST list OL_EN
+Rule 21    ul -> UL_ST list UL_EN
+Rule 22    listitem -> ITEM_ST TEXT
+Rule 23    list -> list listitem
+Rule 24    list -> listitem
+Rule 25    sentence -> UNDERLINE LCURLY sentence RCURLY sentence
+Rule 26    sentence -> BOLD LCURLY sentence RCURLY sentence
+Rule 27    sentence -> ITALICS LCURLY sentence RCURLY sentence
+Rule 28    sentence -> sentence TEXT
+Rule 29    sentence -> TEXT sentence
+Rule 30    sentence -> TEXT
 
 Terminals, with rules where they appear
 
+AUTHOR               : 3
+BODY                 : 4
+BOLD                 : 26
+DOCUMENT             : 1
+DOLLAR               : 
 DOTS                 : 
-ITEM_ST              : 7
+DOUBLEQUOTESEND      : 
+DOUBLEQUOTESSTART    : 
+ENDDOCUMENT          : 6
+HREF                 : 
+ITALICS              : 27
+ITEM_ST              : 22
+LATEX                : 
+LCURLY               : 7 16 25 26 27
 NEWLINE              : 
-OL_EN                : 5
-OL_ST                : 5
-TEXT                 : 7
-UL_EN                : 6
-UL_ST                : 6
+NEWLINEMATHEND       : 
+NEWLINEMATHSTART     : 
+OL_EN                : 20
+OL_ST                : 20
+RCURLY               : 7 16 25 26 27
+SECTION              : 16
+SUBSECTION           : 7
+TEXT                 : 22 28 29 30
+TITLE                : 2
+UL_EN                : 21
+UL_ST                : 21
+UNDERLINE            : 25
+URL                  : 
+USEPACKAGE           : 
+USEPACKAGEPARAM      : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-doc                  : 1 2 0
-list                 : 5 6 8
-listitem             : 8 9
-ol                   : 2 3
-ul                   : 1 4
+document             : 1 2 3 4 5 0
+list                 : 20 21 23
+listitem             : 23 24
+ol                   : 12 14
+section              : 5 16 17
+sentence             : 7 10 13 16 19 25 25 26 26 27 27 28 29
+subsection           : 7 8 17 18
+subsectioncon        : 8 9 10 11 12
+ul                   : 11 15
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . doc
-    (1) doc -> . doc ul
-    (2) doc -> . doc ol
-    (3) doc -> . ol
-    (4) doc -> . ul
-    (5) ol -> . OL_ST list OL_EN
-    (6) ul -> . UL_ST list UL_EN
+    (0) S' -> . document
+    (1) document -> . DOCUMENT document
+    (2) document -> . TITLE document
+    (3) document -> . AUTHOR document
+    (4) document -> . BODY document
+    (5) document -> . section document
+    (6) document -> . ENDDOCUMENT
+    (16) section -> . SECTION LCURLY sentence RCURLY section
+    (17) section -> . section subsection
+    (18) section -> . subsection
+    (19) section -> . sentence
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
 
-    OL_ST           shift and go to state 2
+    DOCUMENT        shift and go to state 20
+    TITLE           shift and go to state 9
+    AUTHOR          shift and go to state 7
+    BODY            shift and go to state 16
+    ENDDOCUMENT     shift and go to state 11
+    SECTION         shift and go to state 4
+    SUBSECTION      shift and go to state 10
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
     UL_ST           shift and go to state 5
 
-    doc                            shift and go to state 3
-    ol                             shift and go to state 1
-    ul                             shift and go to state 4
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 2
+    section                        shift and go to state 8
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 15
+    document                       shift and go to state 12
+    subsectioncon                  shift and go to state 13
 
 state 1
 
-    (3) doc -> ol .
+    (27) sentence -> ITALICS . LCURLY sentence RCURLY sentence
 
-    UL_ST           reduce using rule 3 (doc -> ol .)
-    OL_ST           reduce using rule 3 (doc -> ol .)
-    $end            reduce using rule 3 (doc -> ol .)
+    LCURLY          shift and go to state 21
 
 
 state 2
 
-    (5) ol -> OL_ST . list OL_EN
-    (8) list -> . list listitem
-    (9) list -> . listitem
-    (7) listitem -> . ITEM_ST TEXT
+    (19) section -> sentence .
+    (28) sentence -> sentence . TEXT
+    (13) subsectioncon -> sentence .
 
-    ITEM_ST         shift and go to state 6
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! reduce/reduce conflict for UNDERLINE resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for BOLD resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for ITALICS resolved using rule 13 (subsectioncon -> sentence .)
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! reduce/reduce conflict for UL_ST resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for OL_ST resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for DOCUMENT resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for TITLE resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for AUTHOR resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for BODY resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for ENDDOCUMENT resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for SUBSECTION resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for SECTION resolved using rule 13 (subsectioncon -> sentence .)
+    TEXT            shift and go to state 22
+    UNDERLINE       reduce using rule 13 (subsectioncon -> sentence .)
+    BOLD            reduce using rule 13 (subsectioncon -> sentence .)
+    ITALICS         reduce using rule 13 (subsectioncon -> sentence .)
+    UL_ST           reduce using rule 13 (subsectioncon -> sentence .)
+    OL_ST           reduce using rule 13 (subsectioncon -> sentence .)
+    DOCUMENT        reduce using rule 13 (subsectioncon -> sentence .)
+    TITLE           reduce using rule 13 (subsectioncon -> sentence .)
+    AUTHOR          reduce using rule 13 (subsectioncon -> sentence .)
+    BODY            reduce using rule 13 (subsectioncon -> sentence .)
+    ENDDOCUMENT     reduce using rule 13 (subsectioncon -> sentence .)
+    SUBSECTION      reduce using rule 13 (subsectioncon -> sentence .)
+    SECTION         reduce using rule 13 (subsectioncon -> sentence .)
 
-    list                           shift and go to state 7
-    listitem                       shift and go to state 8
+  ! DOCUMENT        [ reduce using rule 19 (section -> sentence .) ]
+  ! TITLE           [ reduce using rule 19 (section -> sentence .) ]
+  ! AUTHOR          [ reduce using rule 19 (section -> sentence .) ]
+  ! BODY            [ reduce using rule 19 (section -> sentence .) ]
+  ! ENDDOCUMENT     [ reduce using rule 19 (section -> sentence .) ]
+  ! SUBSECTION      [ reduce using rule 19 (section -> sentence .) ]
+  ! SECTION         [ reduce using rule 19 (section -> sentence .) ]
+  ! UNDERLINE       [ reduce using rule 19 (section -> sentence .) ]
+  ! BOLD            [ reduce using rule 19 (section -> sentence .) ]
+  ! ITALICS         [ reduce using rule 19 (section -> sentence .) ]
+  ! TEXT            [ reduce using rule 19 (section -> sentence .) ]
+  ! OL_ST           [ reduce using rule 19 (section -> sentence .) ]
+  ! UL_ST           [ reduce using rule 19 (section -> sentence .) ]
+  ! TEXT            [ reduce using rule 13 (subsectioncon -> sentence .) ]
+
 
 state 3
 
-    (0) S' -> doc .
-    (1) doc -> doc . ul
-    (2) doc -> doc . ol
-    (6) ul -> . UL_ST list UL_EN
-    (5) ol -> . OL_ST list OL_EN
+    (29) sentence -> TEXT . sentence
+    (30) sentence -> TEXT .
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
 
-    UL_ST           shift and go to state 5
-    OL_ST           shift and go to state 2
+  ! shift/reduce conflict for UNDERLINE resolved as shift
+  ! shift/reduce conflict for BOLD resolved as shift
+  ! shift/reduce conflict for ITALICS resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+    RCURLY          reduce using rule 30 (sentence -> TEXT .)
+    DOCUMENT        reduce using rule 30 (sentence -> TEXT .)
+    TITLE           reduce using rule 30 (sentence -> TEXT .)
+    AUTHOR          reduce using rule 30 (sentence -> TEXT .)
+    BODY            reduce using rule 30 (sentence -> TEXT .)
+    ENDDOCUMENT     reduce using rule 30 (sentence -> TEXT .)
+    SUBSECTION      reduce using rule 30 (sentence -> TEXT .)
+    SECTION         reduce using rule 30 (sentence -> TEXT .)
+    OL_ST           reduce using rule 30 (sentence -> TEXT .)
+    UL_ST           reduce using rule 30 (sentence -> TEXT .)
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
 
-    ol                             shift and go to state 9
-    ul                             shift and go to state 10
+  ! TEXT            [ reduce using rule 30 (sentence -> TEXT .) ]
+  ! UNDERLINE       [ reduce using rule 30 (sentence -> TEXT .) ]
+  ! BOLD            [ reduce using rule 30 (sentence -> TEXT .) ]
+  ! ITALICS         [ reduce using rule 30 (sentence -> TEXT .) ]
+
+    sentence                       shift and go to state 23
 
 state 4
 
-    (4) doc -> ul .
+    (16) section -> SECTION . LCURLY sentence RCURLY section
 
-    UL_ST           reduce using rule 4 (doc -> ul .)
-    OL_ST           reduce using rule 4 (doc -> ul .)
-    $end            reduce using rule 4 (doc -> ul .)
+    LCURLY          shift and go to state 24
 
 
 state 5
 
-    (6) ul -> UL_ST . list UL_EN
-    (8) list -> . list listitem
-    (9) list -> . listitem
-    (7) listitem -> . ITEM_ST TEXT
+    (21) ul -> UL_ST . list UL_EN
+    (23) list -> . list listitem
+    (24) list -> . listitem
+    (22) listitem -> . ITEM_ST TEXT
 
-    ITEM_ST         shift and go to state 6
+    ITEM_ST         shift and go to state 25
 
-    list                           shift and go to state 11
-    listitem                       shift and go to state 8
+    list                           shift and go to state 26
+    listitem                       shift and go to state 27
 
 state 6
 
-    (7) listitem -> ITEM_ST . TEXT
+    (20) ol -> OL_ST . list OL_EN
+    (23) list -> . list listitem
+    (24) list -> . listitem
+    (22) listitem -> . ITEM_ST TEXT
 
-    TEXT            shift and go to state 12
+    ITEM_ST         shift and go to state 25
 
+    list                           shift and go to state 28
+    listitem                       shift and go to state 27
 
 state 7
 
-    (5) ol -> OL_ST list . OL_EN
-    (8) list -> list . listitem
-    (7) listitem -> . ITEM_ST TEXT
+    (3) document -> AUTHOR . document
+    (1) document -> . DOCUMENT document
+    (2) document -> . TITLE document
+    (3) document -> . AUTHOR document
+    (4) document -> . BODY document
+    (5) document -> . section document
+    (6) document -> . ENDDOCUMENT
+    (16) section -> . SECTION LCURLY sentence RCURLY section
+    (17) section -> . section subsection
+    (18) section -> . subsection
+    (19) section -> . sentence
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
 
-    OL_EN           shift and go to state 14
-    ITEM_ST         shift and go to state 6
+    DOCUMENT        shift and go to state 20
+    TITLE           shift and go to state 9
+    AUTHOR          shift and go to state 7
+    BODY            shift and go to state 16
+    ENDDOCUMENT     shift and go to state 11
+    SECTION         shift and go to state 4
+    SUBSECTION      shift and go to state 10
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
 
-    listitem                       shift and go to state 13
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 2
+    section                        shift and go to state 8
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 15
+    document                       shift and go to state 29
+    subsectioncon                  shift and go to state 13
 
 state 8
 
-    (9) list -> listitem .
+    (5) document -> section . document
+    (17) section -> section . subsection
+    (1) document -> . DOCUMENT document
+    (2) document -> . TITLE document
+    (3) document -> . AUTHOR document
+    (4) document -> . BODY document
+    (5) document -> . section document
+    (6) document -> . ENDDOCUMENT
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (16) section -> . SECTION LCURLY sentence RCURLY section
+    (17) section -> . section subsection
+    (18) section -> . subsection
+    (19) section -> . sentence
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
 
-    OL_EN           reduce using rule 9 (list -> listitem .)
-    ITEM_ST         reduce using rule 9 (list -> listitem .)
-    UL_EN           reduce using rule 9 (list -> listitem .)
+    DOCUMENT        shift and go to state 20
+    TITLE           shift and go to state 9
+    AUTHOR          shift and go to state 7
+    BODY            shift and go to state 16
+    ENDDOCUMENT     shift and go to state 11
+    SUBSECTION      shift and go to state 10
+    SECTION         shift and go to state 4
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
 
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 30
+    section                        shift and go to state 8
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 31
+    document                       shift and go to state 32
+    subsectioncon                  shift and go to state 13
 
 state 9
 
-    (2) doc -> doc ol .
+    (2) document -> TITLE . document
+    (1) document -> . DOCUMENT document
+    (2) document -> . TITLE document
+    (3) document -> . AUTHOR document
+    (4) document -> . BODY document
+    (5) document -> . section document
+    (6) document -> . ENDDOCUMENT
+    (16) section -> . SECTION LCURLY sentence RCURLY section
+    (17) section -> . section subsection
+    (18) section -> . subsection
+    (19) section -> . sentence
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
 
-    UL_ST           reduce using rule 2 (doc -> doc ol .)
-    OL_ST           reduce using rule 2 (doc -> doc ol .)
-    $end            reduce using rule 2 (doc -> doc ol .)
+    DOCUMENT        shift and go to state 20
+    TITLE           shift and go to state 9
+    AUTHOR          shift and go to state 7
+    BODY            shift and go to state 16
+    ENDDOCUMENT     shift and go to state 11
+    SECTION         shift and go to state 4
+    SUBSECTION      shift and go to state 10
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
 
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 2
+    section                        shift and go to state 8
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 15
+    document                       shift and go to state 33
+    subsectioncon                  shift and go to state 13
 
 state 10
 
-    (1) doc -> doc ul .
+    (7) subsection -> SUBSECTION . LCURLY sentence RCURLY subsection
 
-    UL_ST           reduce using rule 1 (doc -> doc ul .)
-    OL_ST           reduce using rule 1 (doc -> doc ul .)
-    $end            reduce using rule 1 (doc -> doc ul .)
+    LCURLY          shift and go to state 34
 
 
 state 11
 
-    (6) ul -> UL_ST list . UL_EN
-    (8) list -> list . listitem
-    (7) listitem -> . ITEM_ST TEXT
+    (6) document -> ENDDOCUMENT .
 
-    UL_EN           shift and go to state 15
-    ITEM_ST         shift and go to state 6
+    $end            reduce using rule 6 (document -> ENDDOCUMENT .)
 
-    listitem                       shift and go to state 13
 
 state 12
 
-    (7) listitem -> ITEM_ST TEXT .
+    (0) S' -> document .
 
-    OL_EN           reduce using rule 7 (listitem -> ITEM_ST TEXT .)
-    ITEM_ST         reduce using rule 7 (listitem -> ITEM_ST TEXT .)
-    UL_EN           reduce using rule 7 (listitem -> ITEM_ST TEXT .)
 
 
 state 13
 
-    (8) list -> list listitem .
+    (9) subsection -> subsectioncon .
+    (10) subsectioncon -> subsectioncon . sentence
+    (11) subsectioncon -> subsectioncon . ul
+    (12) subsectioncon -> subsectioncon . ol
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (21) ul -> . UL_ST list UL_EN
+    (20) ol -> . OL_ST list OL_EN
 
-    OL_EN           reduce using rule 8 (list -> list listitem .)
-    ITEM_ST         reduce using rule 8 (list -> list listitem .)
-    UL_EN           reduce using rule 8 (list -> list listitem .)
+  ! shift/reduce conflict for UNDERLINE resolved as shift
+  ! shift/reduce conflict for BOLD resolved as shift
+  ! shift/reduce conflict for ITALICS resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! shift/reduce conflict for UL_ST resolved as shift
+  ! shift/reduce conflict for OL_ST resolved as shift
+    DOCUMENT        reduce using rule 9 (subsection -> subsectioncon .)
+    TITLE           reduce using rule 9 (subsection -> subsectioncon .)
+    AUTHOR          reduce using rule 9 (subsection -> subsectioncon .)
+    BODY            reduce using rule 9 (subsection -> subsectioncon .)
+    ENDDOCUMENT     reduce using rule 9 (subsection -> subsectioncon .)
+    SUBSECTION      reduce using rule 9 (subsection -> subsectioncon .)
+    SECTION         reduce using rule 9 (subsection -> subsectioncon .)
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    UL_ST           shift and go to state 5
+    OL_ST           shift and go to state 6
 
+  ! UNDERLINE       [ reduce using rule 9 (subsection -> subsectioncon .) ]
+  ! BOLD            [ reduce using rule 9 (subsection -> subsectioncon .) ]
+  ! ITALICS         [ reduce using rule 9 (subsection -> subsectioncon .) ]
+  ! TEXT            [ reduce using rule 9 (subsection -> subsectioncon .) ]
+  ! OL_ST           [ reduce using rule 9 (subsection -> subsectioncon .) ]
+  ! UL_ST           [ reduce using rule 9 (subsection -> subsectioncon .) ]
+
+    ul                             shift and go to state 36
+    ol                             shift and go to state 35
+    sentence                       shift and go to state 37
 
 state 14
 
-    (5) ol -> OL_ST list OL_EN .
+    (25) sentence -> UNDERLINE . LCURLY sentence RCURLY sentence
 
-    UL_ST           reduce using rule 5 (ol -> OL_ST list OL_EN .)
-    OL_ST           reduce using rule 5 (ol -> OL_ST list OL_EN .)
-    $end            reduce using rule 5 (ol -> OL_ST list OL_EN .)
+    LCURLY          shift and go to state 38
 
 
 state 15
 
-    (6) ul -> UL_ST list UL_EN .
+    (18) section -> subsection .
+    (8) subsection -> subsection . subsectioncon
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
 
-    UL_ST           reduce using rule 6 (ul -> UL_ST list UL_EN .)
-    OL_ST           reduce using rule 6 (ul -> UL_ST list UL_EN .)
-    $end            reduce using rule 6 (ul -> UL_ST list UL_EN .)
+  ! shift/reduce conflict for UNDERLINE resolved as shift
+  ! shift/reduce conflict for BOLD resolved as shift
+  ! shift/reduce conflict for ITALICS resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! shift/reduce conflict for OL_ST resolved as shift
+  ! shift/reduce conflict for UL_ST resolved as shift
+    DOCUMENT        reduce using rule 18 (section -> subsection .)
+    TITLE           reduce using rule 18 (section -> subsection .)
+    AUTHOR          reduce using rule 18 (section -> subsection .)
+    BODY            reduce using rule 18 (section -> subsection .)
+    ENDDOCUMENT     reduce using rule 18 (section -> subsection .)
+    SUBSECTION      reduce using rule 18 (section -> subsection .)
+    SECTION         reduce using rule 18 (section -> subsection .)
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
 
+  ! UNDERLINE       [ reduce using rule 18 (section -> subsection .) ]
+  ! BOLD            [ reduce using rule 18 (section -> subsection .) ]
+  ! ITALICS         [ reduce using rule 18 (section -> subsection .) ]
+  ! TEXT            [ reduce using rule 18 (section -> subsection .) ]
+  ! OL_ST           [ reduce using rule 18 (section -> subsection .) ]
+  ! UL_ST           [ reduce using rule 18 (section -> subsection .) ]
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 39
+    ul                             shift and go to state 19
+    subsectioncon                  shift and go to state 40
+
+state 16
+
+    (4) document -> BODY . document
+    (1) document -> . DOCUMENT document
+    (2) document -> . TITLE document
+    (3) document -> . AUTHOR document
+    (4) document -> . BODY document
+    (5) document -> . section document
+    (6) document -> . ENDDOCUMENT
+    (16) section -> . SECTION LCURLY sentence RCURLY section
+    (17) section -> . section subsection
+    (18) section -> . subsection
+    (19) section -> . sentence
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
+
+    DOCUMENT        shift and go to state 20
+    TITLE           shift and go to state 9
+    AUTHOR          shift and go to state 7
+    BODY            shift and go to state 16
+    ENDDOCUMENT     shift and go to state 11
+    SECTION         shift and go to state 4
+    SUBSECTION      shift and go to state 10
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 2
+    section                        shift and go to state 8
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 15
+    document                       shift and go to state 41
+    subsectioncon                  shift and go to state 13
+
+state 17
+
+    (26) sentence -> BOLD . LCURLY sentence RCURLY sentence
+
+    LCURLY          shift and go to state 42
+
+
+state 18
+
+    (14) subsectioncon -> ol .
+
+    UNDERLINE       reduce using rule 14 (subsectioncon -> ol .)
+    BOLD            reduce using rule 14 (subsectioncon -> ol .)
+    ITALICS         reduce using rule 14 (subsectioncon -> ol .)
+    TEXT            reduce using rule 14 (subsectioncon -> ol .)
+    UL_ST           reduce using rule 14 (subsectioncon -> ol .)
+    OL_ST           reduce using rule 14 (subsectioncon -> ol .)
+    DOCUMENT        reduce using rule 14 (subsectioncon -> ol .)
+    TITLE           reduce using rule 14 (subsectioncon -> ol .)
+    AUTHOR          reduce using rule 14 (subsectioncon -> ol .)
+    BODY            reduce using rule 14 (subsectioncon -> ol .)
+    ENDDOCUMENT     reduce using rule 14 (subsectioncon -> ol .)
+    SUBSECTION      reduce using rule 14 (subsectioncon -> ol .)
+    SECTION         reduce using rule 14 (subsectioncon -> ol .)
+
+
+state 19
+
+    (15) subsectioncon -> ul .
+
+    UNDERLINE       reduce using rule 15 (subsectioncon -> ul .)
+    BOLD            reduce using rule 15 (subsectioncon -> ul .)
+    ITALICS         reduce using rule 15 (subsectioncon -> ul .)
+    TEXT            reduce using rule 15 (subsectioncon -> ul .)
+    UL_ST           reduce using rule 15 (subsectioncon -> ul .)
+    OL_ST           reduce using rule 15 (subsectioncon -> ul .)
+    DOCUMENT        reduce using rule 15 (subsectioncon -> ul .)
+    TITLE           reduce using rule 15 (subsectioncon -> ul .)
+    AUTHOR          reduce using rule 15 (subsectioncon -> ul .)
+    BODY            reduce using rule 15 (subsectioncon -> ul .)
+    ENDDOCUMENT     reduce using rule 15 (subsectioncon -> ul .)
+    SUBSECTION      reduce using rule 15 (subsectioncon -> ul .)
+    SECTION         reduce using rule 15 (subsectioncon -> ul .)
+
+
+state 20
+
+    (1) document -> DOCUMENT . document
+    (1) document -> . DOCUMENT document
+    (2) document -> . TITLE document
+    (3) document -> . AUTHOR document
+    (4) document -> . BODY document
+    (5) document -> . section document
+    (6) document -> . ENDDOCUMENT
+    (16) section -> . SECTION LCURLY sentence RCURLY section
+    (17) section -> . section subsection
+    (18) section -> . subsection
+    (19) section -> . sentence
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
+
+    DOCUMENT        shift and go to state 20
+    TITLE           shift and go to state 9
+    AUTHOR          shift and go to state 7
+    BODY            shift and go to state 16
+    ENDDOCUMENT     shift and go to state 11
+    SECTION         shift and go to state 4
+    SUBSECTION      shift and go to state 10
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 2
+    section                        shift and go to state 8
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 15
+    document                       shift and go to state 43
+    subsectioncon                  shift and go to state 13
+
+state 21
+
+    (27) sentence -> ITALICS LCURLY . sentence RCURLY sentence
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+
+    sentence                       shift and go to state 44
+
+state 22
+
+    (28) sentence -> sentence TEXT .
+
+    RCURLY          reduce using rule 28 (sentence -> sentence TEXT .)
+    TEXT            reduce using rule 28 (sentence -> sentence TEXT .)
+    DOCUMENT        reduce using rule 28 (sentence -> sentence TEXT .)
+    TITLE           reduce using rule 28 (sentence -> sentence TEXT .)
+    AUTHOR          reduce using rule 28 (sentence -> sentence TEXT .)
+    BODY            reduce using rule 28 (sentence -> sentence TEXT .)
+    ENDDOCUMENT     reduce using rule 28 (sentence -> sentence TEXT .)
+    SUBSECTION      reduce using rule 28 (sentence -> sentence TEXT .)
+    SECTION         reduce using rule 28 (sentence -> sentence TEXT .)
+    UNDERLINE       reduce using rule 28 (sentence -> sentence TEXT .)
+    BOLD            reduce using rule 28 (sentence -> sentence TEXT .)
+    ITALICS         reduce using rule 28 (sentence -> sentence TEXT .)
+    OL_ST           reduce using rule 28 (sentence -> sentence TEXT .)
+    UL_ST           reduce using rule 28 (sentence -> sentence TEXT .)
+
+
+state 23
+
+    (29) sentence -> TEXT sentence .
+    (28) sentence -> sentence . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    RCURLY          reduce using rule 29 (sentence -> TEXT sentence .)
+    DOCUMENT        reduce using rule 29 (sentence -> TEXT sentence .)
+    TITLE           reduce using rule 29 (sentence -> TEXT sentence .)
+    AUTHOR          reduce using rule 29 (sentence -> TEXT sentence .)
+    BODY            reduce using rule 29 (sentence -> TEXT sentence .)
+    ENDDOCUMENT     reduce using rule 29 (sentence -> TEXT sentence .)
+    SUBSECTION      reduce using rule 29 (sentence -> TEXT sentence .)
+    SECTION         reduce using rule 29 (sentence -> TEXT sentence .)
+    UNDERLINE       reduce using rule 29 (sentence -> TEXT sentence .)
+    BOLD            reduce using rule 29 (sentence -> TEXT sentence .)
+    ITALICS         reduce using rule 29 (sentence -> TEXT sentence .)
+    OL_ST           reduce using rule 29 (sentence -> TEXT sentence .)
+    UL_ST           reduce using rule 29 (sentence -> TEXT sentence .)
+    TEXT            shift and go to state 22
+
+  ! TEXT            [ reduce using rule 29 (sentence -> TEXT sentence .) ]
+
+
+state 24
+
+    (16) section -> SECTION LCURLY . sentence RCURLY section
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+
+    sentence                       shift and go to state 45
+
+state 25
+
+    (22) listitem -> ITEM_ST . TEXT
+
+    TEXT            shift and go to state 46
+
+
+state 26
+
+    (21) ul -> UL_ST list . UL_EN
+    (23) list -> list . listitem
+    (22) listitem -> . ITEM_ST TEXT
+
+    UL_EN           shift and go to state 47
+    ITEM_ST         shift and go to state 25
+
+    listitem                       shift and go to state 48
+
+state 27
+
+    (24) list -> listitem .
+
+    OL_EN           reduce using rule 24 (list -> listitem .)
+    ITEM_ST         reduce using rule 24 (list -> listitem .)
+    UL_EN           reduce using rule 24 (list -> listitem .)
+
+
+state 28
+
+    (20) ol -> OL_ST list . OL_EN
+    (23) list -> list . listitem
+    (22) listitem -> . ITEM_ST TEXT
+
+    OL_EN           shift and go to state 49
+    ITEM_ST         shift and go to state 25
+
+    listitem                       shift and go to state 48
+
+state 29
+
+    (3) document -> AUTHOR document .
+
+    $end            reduce using rule 3 (document -> AUTHOR document .)
+
+
+state 30
+
+    (19) section -> sentence .
+    (13) subsectioncon -> sentence .
+    (28) sentence -> sentence . TEXT
+
+  ! reduce/reduce conflict for UNDERLINE resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for BOLD resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for ITALICS resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for TEXT resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for UL_ST resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for OL_ST resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for DOCUMENT resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for TITLE resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for AUTHOR resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for BODY resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for ENDDOCUMENT resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for SUBSECTION resolved using rule 13 (subsectioncon -> sentence .)
+  ! reduce/reduce conflict for SECTION resolved using rule 13 (subsectioncon -> sentence .)
+  ! shift/reduce conflict for TEXT resolved as shift
+    UNDERLINE       reduce using rule 13 (subsectioncon -> sentence .)
+    BOLD            reduce using rule 13 (subsectioncon -> sentence .)
+    ITALICS         reduce using rule 13 (subsectioncon -> sentence .)
+    UL_ST           reduce using rule 13 (subsectioncon -> sentence .)
+    OL_ST           reduce using rule 13 (subsectioncon -> sentence .)
+    DOCUMENT        reduce using rule 13 (subsectioncon -> sentence .)
+    TITLE           reduce using rule 13 (subsectioncon -> sentence .)
+    AUTHOR          reduce using rule 13 (subsectioncon -> sentence .)
+    BODY            reduce using rule 13 (subsectioncon -> sentence .)
+    ENDDOCUMENT     reduce using rule 13 (subsectioncon -> sentence .)
+    SUBSECTION      reduce using rule 13 (subsectioncon -> sentence .)
+    SECTION         reduce using rule 13 (subsectioncon -> sentence .)
+    TEXT            shift and go to state 22
+
+  ! DOCUMENT        [ reduce using rule 19 (section -> sentence .) ]
+  ! TITLE           [ reduce using rule 19 (section -> sentence .) ]
+  ! AUTHOR          [ reduce using rule 19 (section -> sentence .) ]
+  ! BODY            [ reduce using rule 19 (section -> sentence .) ]
+  ! ENDDOCUMENT     [ reduce using rule 19 (section -> sentence .) ]
+  ! SUBSECTION      [ reduce using rule 19 (section -> sentence .) ]
+  ! SECTION         [ reduce using rule 19 (section -> sentence .) ]
+  ! UNDERLINE       [ reduce using rule 19 (section -> sentence .) ]
+  ! BOLD            [ reduce using rule 19 (section -> sentence .) ]
+  ! ITALICS         [ reduce using rule 19 (section -> sentence .) ]
+  ! TEXT            [ reduce using rule 19 (section -> sentence .) ]
+  ! OL_ST           [ reduce using rule 19 (section -> sentence .) ]
+  ! UL_ST           [ reduce using rule 19 (section -> sentence .) ]
+  ! TEXT            [ reduce using rule 13 (subsectioncon -> sentence .) ]
+
+
+state 31
+
+    (17) section -> section subsection .
+    (8) subsection -> subsection . subsectioncon
+    (18) section -> subsection .
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
+
+  ! reduce/reduce conflict for DOCUMENT resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for TITLE resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for AUTHOR resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for BODY resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for ENDDOCUMENT resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for SUBSECTION resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for SECTION resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for UNDERLINE resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for BOLD resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for ITALICS resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for TEXT resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for OL_ST resolved using rule 17 (section -> section subsection .)
+  ! reduce/reduce conflict for UL_ST resolved using rule 17 (section -> section subsection .)
+  ! shift/reduce conflict for UNDERLINE resolved as shift
+  ! shift/reduce conflict for BOLD resolved as shift
+  ! shift/reduce conflict for ITALICS resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! shift/reduce conflict for OL_ST resolved as shift
+  ! shift/reduce conflict for UL_ST resolved as shift
+    DOCUMENT        reduce using rule 17 (section -> section subsection .)
+    TITLE           reduce using rule 17 (section -> section subsection .)
+    AUTHOR          reduce using rule 17 (section -> section subsection .)
+    BODY            reduce using rule 17 (section -> section subsection .)
+    ENDDOCUMENT     reduce using rule 17 (section -> section subsection .)
+    SUBSECTION      reduce using rule 17 (section -> section subsection .)
+    SECTION         reduce using rule 17 (section -> section subsection .)
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
+
+  ! UNDERLINE       [ reduce using rule 17 (section -> section subsection .) ]
+  ! BOLD            [ reduce using rule 17 (section -> section subsection .) ]
+  ! ITALICS         [ reduce using rule 17 (section -> section subsection .) ]
+  ! TEXT            [ reduce using rule 17 (section -> section subsection .) ]
+  ! OL_ST           [ reduce using rule 17 (section -> section subsection .) ]
+  ! UL_ST           [ reduce using rule 17 (section -> section subsection .) ]
+  ! DOCUMENT        [ reduce using rule 18 (section -> subsection .) ]
+  ! TITLE           [ reduce using rule 18 (section -> subsection .) ]
+  ! AUTHOR          [ reduce using rule 18 (section -> subsection .) ]
+  ! BODY            [ reduce using rule 18 (section -> subsection .) ]
+  ! ENDDOCUMENT     [ reduce using rule 18 (section -> subsection .) ]
+  ! SUBSECTION      [ reduce using rule 18 (section -> subsection .) ]
+  ! SECTION         [ reduce using rule 18 (section -> subsection .) ]
+  ! UNDERLINE       [ reduce using rule 18 (section -> subsection .) ]
+  ! BOLD            [ reduce using rule 18 (section -> subsection .) ]
+  ! ITALICS         [ reduce using rule 18 (section -> subsection .) ]
+  ! TEXT            [ reduce using rule 18 (section -> subsection .) ]
+  ! OL_ST           [ reduce using rule 18 (section -> subsection .) ]
+  ! UL_ST           [ reduce using rule 18 (section -> subsection .) ]
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 39
+    ul                             shift and go to state 19
+    subsectioncon                  shift and go to state 40
+
+state 32
+
+    (5) document -> section document .
+
+    $end            reduce using rule 5 (document -> section document .)
+
+
+state 33
+
+    (2) document -> TITLE document .
+
+    $end            reduce using rule 2 (document -> TITLE document .)
+
+
+state 34
+
+    (7) subsection -> SUBSECTION LCURLY . sentence RCURLY subsection
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+
+    sentence                       shift and go to state 50
+
+state 35
+
+    (12) subsectioncon -> subsectioncon ol .
+
+    UNDERLINE       reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    BOLD            reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    ITALICS         reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    TEXT            reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    UL_ST           reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    OL_ST           reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    DOCUMENT        reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    TITLE           reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    AUTHOR          reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    BODY            reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    ENDDOCUMENT     reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    SUBSECTION      reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+    SECTION         reduce using rule 12 (subsectioncon -> subsectioncon ol .)
+
+
+state 36
+
+    (11) subsectioncon -> subsectioncon ul .
+
+    UNDERLINE       reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    BOLD            reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    ITALICS         reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    TEXT            reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    UL_ST           reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    OL_ST           reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    DOCUMENT        reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    TITLE           reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    AUTHOR          reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    BODY            reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    ENDDOCUMENT     reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    SUBSECTION      reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+    SECTION         reduce using rule 11 (subsectioncon -> subsectioncon ul .)
+
+
+state 37
+
+    (10) subsectioncon -> subsectioncon sentence .
+    (28) sentence -> sentence . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    UNDERLINE       reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    BOLD            reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    ITALICS         reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    UL_ST           reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    OL_ST           reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    DOCUMENT        reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    TITLE           reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    AUTHOR          reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    BODY            reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    ENDDOCUMENT     reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    SUBSECTION      reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    SECTION         reduce using rule 10 (subsectioncon -> subsectioncon sentence .)
+    TEXT            shift and go to state 22
+
+  ! TEXT            [ reduce using rule 10 (subsectioncon -> subsectioncon sentence .) ]
+
+
+state 38
+
+    (25) sentence -> UNDERLINE LCURLY . sentence RCURLY sentence
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+
+    sentence                       shift and go to state 51
+
+state 39
+
+    (13) subsectioncon -> sentence .
+    (28) sentence -> sentence . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    UNDERLINE       reduce using rule 13 (subsectioncon -> sentence .)
+    BOLD            reduce using rule 13 (subsectioncon -> sentence .)
+    ITALICS         reduce using rule 13 (subsectioncon -> sentence .)
+    UL_ST           reduce using rule 13 (subsectioncon -> sentence .)
+    OL_ST           reduce using rule 13 (subsectioncon -> sentence .)
+    DOCUMENT        reduce using rule 13 (subsectioncon -> sentence .)
+    TITLE           reduce using rule 13 (subsectioncon -> sentence .)
+    AUTHOR          reduce using rule 13 (subsectioncon -> sentence .)
+    BODY            reduce using rule 13 (subsectioncon -> sentence .)
+    ENDDOCUMENT     reduce using rule 13 (subsectioncon -> sentence .)
+    SUBSECTION      reduce using rule 13 (subsectioncon -> sentence .)
+    SECTION         reduce using rule 13 (subsectioncon -> sentence .)
+    TEXT            shift and go to state 22
+
+  ! TEXT            [ reduce using rule 13 (subsectioncon -> sentence .) ]
+
+
+state 40
+
+    (8) subsection -> subsection subsectioncon .
+    (10) subsectioncon -> subsectioncon . sentence
+    (11) subsectioncon -> subsectioncon . ul
+    (12) subsectioncon -> subsectioncon . ol
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (21) ul -> . UL_ST list UL_EN
+    (20) ol -> . OL_ST list OL_EN
+
+  ! shift/reduce conflict for UNDERLINE resolved as shift
+  ! shift/reduce conflict for BOLD resolved as shift
+  ! shift/reduce conflict for ITALICS resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! shift/reduce conflict for UL_ST resolved as shift
+  ! shift/reduce conflict for OL_ST resolved as shift
+    DOCUMENT        reduce using rule 8 (subsection -> subsection subsectioncon .)
+    TITLE           reduce using rule 8 (subsection -> subsection subsectioncon .)
+    AUTHOR          reduce using rule 8 (subsection -> subsection subsectioncon .)
+    BODY            reduce using rule 8 (subsection -> subsection subsectioncon .)
+    ENDDOCUMENT     reduce using rule 8 (subsection -> subsection subsectioncon .)
+    SUBSECTION      reduce using rule 8 (subsection -> subsection subsectioncon .)
+    SECTION         reduce using rule 8 (subsection -> subsection subsectioncon .)
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    UL_ST           shift and go to state 5
+    OL_ST           shift and go to state 6
+
+  ! UNDERLINE       [ reduce using rule 8 (subsection -> subsection subsectioncon .) ]
+  ! BOLD            [ reduce using rule 8 (subsection -> subsection subsectioncon .) ]
+  ! ITALICS         [ reduce using rule 8 (subsection -> subsection subsectioncon .) ]
+  ! TEXT            [ reduce using rule 8 (subsection -> subsection subsectioncon .) ]
+  ! OL_ST           [ reduce using rule 8 (subsection -> subsection subsectioncon .) ]
+  ! UL_ST           [ reduce using rule 8 (subsection -> subsection subsectioncon .) ]
+
+    ol                             shift and go to state 35
+    sentence                       shift and go to state 37
+    ul                             shift and go to state 36
+
+state 41
+
+    (4) document -> BODY document .
+
+    $end            reduce using rule 4 (document -> BODY document .)
+
+
+state 42
+
+    (26) sentence -> BOLD LCURLY . sentence RCURLY sentence
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+
+    sentence                       shift and go to state 52
+
+state 43
+
+    (1) document -> DOCUMENT document .
+
+    $end            reduce using rule 1 (document -> DOCUMENT document .)
+
+
+state 44
+
+    (27) sentence -> ITALICS LCURLY sentence . RCURLY sentence
+    (28) sentence -> sentence . TEXT
+
+    RCURLY          shift and go to state 53
+    TEXT            shift and go to state 22
+
+
+state 45
+
+    (16) section -> SECTION LCURLY sentence . RCURLY section
+    (28) sentence -> sentence . TEXT
+
+    RCURLY          shift and go to state 54
+    TEXT            shift and go to state 22
+
+
+state 46
+
+    (22) listitem -> ITEM_ST TEXT .
+
+    UL_EN           reduce using rule 22 (listitem -> ITEM_ST TEXT .)
+    ITEM_ST         reduce using rule 22 (listitem -> ITEM_ST TEXT .)
+    OL_EN           reduce using rule 22 (listitem -> ITEM_ST TEXT .)
+
+
+state 47
+
+    (21) ul -> UL_ST list UL_EN .
+
+    UNDERLINE       reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    BOLD            reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    ITALICS         reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    TEXT            reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    UL_ST           reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    OL_ST           reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    DOCUMENT        reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    TITLE           reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    AUTHOR          reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    BODY            reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    ENDDOCUMENT     reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    SUBSECTION      reduce using rule 21 (ul -> UL_ST list UL_EN .)
+    SECTION         reduce using rule 21 (ul -> UL_ST list UL_EN .)
+
+
+state 48
+
+    (23) list -> list listitem .
+
+    OL_EN           reduce using rule 23 (list -> list listitem .)
+    ITEM_ST         reduce using rule 23 (list -> list listitem .)
+    UL_EN           reduce using rule 23 (list -> list listitem .)
+
+
+state 49
+
+    (20) ol -> OL_ST list OL_EN .
+
+    UNDERLINE       reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    BOLD            reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    ITALICS         reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    TEXT            reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    UL_ST           reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    OL_ST           reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    DOCUMENT        reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    TITLE           reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    AUTHOR          reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    BODY            reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    ENDDOCUMENT     reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    SUBSECTION      reduce using rule 20 (ol -> OL_ST list OL_EN .)
+    SECTION         reduce using rule 20 (ol -> OL_ST list OL_EN .)
+
+
+state 50
+
+    (7) subsection -> SUBSECTION LCURLY sentence . RCURLY subsection
+    (28) sentence -> sentence . TEXT
+
+    RCURLY          shift and go to state 55
+    TEXT            shift and go to state 22
+
+
+state 51
+
+    (25) sentence -> UNDERLINE LCURLY sentence . RCURLY sentence
+    (28) sentence -> sentence . TEXT
+
+    RCURLY          shift and go to state 56
+    TEXT            shift and go to state 22
+
+
+state 52
+
+    (26) sentence -> BOLD LCURLY sentence . RCURLY sentence
+    (28) sentence -> sentence . TEXT
+
+    RCURLY          shift and go to state 57
+    TEXT            shift and go to state 22
+
+
+state 53
+
+    (27) sentence -> ITALICS LCURLY sentence RCURLY . sentence
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+
+    sentence                       shift and go to state 58
+
+state 54
+
+    (16) section -> SECTION LCURLY sentence RCURLY . section
+    (16) section -> . SECTION LCURLY sentence RCURLY section
+    (17) section -> . section subsection
+    (18) section -> . subsection
+    (19) section -> . sentence
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
+
+    SECTION         shift and go to state 4
+    SUBSECTION      shift and go to state 10
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 2
+    section                        shift and go to state 59
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 15
+    subsectioncon                  shift and go to state 13
+
+state 55
+
+    (7) subsection -> SUBSECTION LCURLY sentence RCURLY . subsection
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
+
+    SUBSECTION      shift and go to state 10
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 39
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 60
+    subsectioncon                  shift and go to state 13
+
+state 56
+
+    (25) sentence -> UNDERLINE LCURLY sentence RCURLY . sentence
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+
+    sentence                       shift and go to state 61
+
+state 57
+
+    (26) sentence -> BOLD LCURLY sentence RCURLY . sentence
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+
+    sentence                       shift and go to state 62
+
+state 58
+
+    (27) sentence -> ITALICS LCURLY sentence RCURLY sentence .
+    (28) sentence -> sentence . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    RCURLY          reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    DOCUMENT        reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    TITLE           reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    AUTHOR          reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    BODY            reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    ENDDOCUMENT     reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    SUBSECTION      reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    SECTION         reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    UNDERLINE       reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    BOLD            reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    ITALICS         reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    OL_ST           reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    UL_ST           reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .)
+    TEXT            shift and go to state 22
+
+  ! TEXT            [ reduce using rule 27 (sentence -> ITALICS LCURLY sentence RCURLY sentence .) ]
+
+
+state 59
+
+    (16) section -> SECTION LCURLY sentence RCURLY section .
+    (17) section -> section . subsection
+    (7) subsection -> . SUBSECTION LCURLY sentence RCURLY subsection
+    (8) subsection -> . subsection subsectioncon
+    (9) subsection -> . subsectioncon
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
+
+  ! shift/reduce conflict for SUBSECTION resolved as shift
+  ! shift/reduce conflict for UNDERLINE resolved as shift
+  ! shift/reduce conflict for BOLD resolved as shift
+  ! shift/reduce conflict for ITALICS resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! shift/reduce conflict for OL_ST resolved as shift
+  ! shift/reduce conflict for UL_ST resolved as shift
+    DOCUMENT        reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .)
+    TITLE           reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .)
+    AUTHOR          reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .)
+    BODY            reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .)
+    ENDDOCUMENT     reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .)
+    SECTION         reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .)
+    SUBSECTION      shift and go to state 10
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
+
+  ! SUBSECTION      [ reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .) ]
+  ! UNDERLINE       [ reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .) ]
+  ! BOLD            [ reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .) ]
+  ! ITALICS         [ reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .) ]
+  ! TEXT            [ reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .) ]
+  ! OL_ST           [ reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .) ]
+  ! UL_ST           [ reduce using rule 16 (section -> SECTION LCURLY sentence RCURLY section .) ]
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 39
+    ul                             shift and go to state 19
+    subsection                     shift and go to state 63
+    subsectioncon                  shift and go to state 13
+
+state 60
+
+    (7) subsection -> SUBSECTION LCURLY sentence RCURLY subsection .
+    (8) subsection -> subsection . subsectioncon
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
+
+  ! shift/reduce conflict for UNDERLINE resolved as shift
+  ! shift/reduce conflict for BOLD resolved as shift
+  ! shift/reduce conflict for ITALICS resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! shift/reduce conflict for OL_ST resolved as shift
+  ! shift/reduce conflict for UL_ST resolved as shift
+    DOCUMENT        reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .)
+    TITLE           reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .)
+    AUTHOR          reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .)
+    BODY            reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .)
+    ENDDOCUMENT     reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .)
+    SUBSECTION      reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .)
+    SECTION         reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .)
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
+
+  ! UNDERLINE       [ reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .) ]
+  ! BOLD            [ reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .) ]
+  ! ITALICS         [ reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .) ]
+  ! TEXT            [ reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .) ]
+  ! OL_ST           [ reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .) ]
+  ! UL_ST           [ reduce using rule 7 (subsection -> SUBSECTION LCURLY sentence RCURLY subsection .) ]
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 39
+    ul                             shift and go to state 19
+    subsectioncon                  shift and go to state 40
+
+state 61
+
+    (25) sentence -> UNDERLINE LCURLY sentence RCURLY sentence .
+    (28) sentence -> sentence . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    RCURLY          reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    DOCUMENT        reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    TITLE           reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    AUTHOR          reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    BODY            reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    ENDDOCUMENT     reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    SUBSECTION      reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    SECTION         reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    UNDERLINE       reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    BOLD            reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    ITALICS         reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    OL_ST           reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    UL_ST           reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .)
+    TEXT            shift and go to state 22
+
+  ! TEXT            [ reduce using rule 25 (sentence -> UNDERLINE LCURLY sentence RCURLY sentence .) ]
+
+
+state 62
+
+    (26) sentence -> BOLD LCURLY sentence RCURLY sentence .
+    (28) sentence -> sentence . TEXT
+
+  ! shift/reduce conflict for TEXT resolved as shift
+    RCURLY          reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    DOCUMENT        reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    TITLE           reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    AUTHOR          reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    BODY            reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    ENDDOCUMENT     reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    SUBSECTION      reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    SECTION         reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    UNDERLINE       reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    BOLD            reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    ITALICS         reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    OL_ST           reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    UL_ST           reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .)
+    TEXT            shift and go to state 22
+
+  ! TEXT            [ reduce using rule 26 (sentence -> BOLD LCURLY sentence RCURLY sentence .) ]
+
+
+state 63
+
+    (17) section -> section subsection .
+    (8) subsection -> subsection . subsectioncon
+    (10) subsectioncon -> . subsectioncon sentence
+    (11) subsectioncon -> . subsectioncon ul
+    (12) subsectioncon -> . subsectioncon ol
+    (13) subsectioncon -> . sentence
+    (14) subsectioncon -> . ol
+    (15) subsectioncon -> . ul
+    (25) sentence -> . UNDERLINE LCURLY sentence RCURLY sentence
+    (26) sentence -> . BOLD LCURLY sentence RCURLY sentence
+    (27) sentence -> . ITALICS LCURLY sentence RCURLY sentence
+    (28) sentence -> . sentence TEXT
+    (29) sentence -> . TEXT sentence
+    (30) sentence -> . TEXT
+    (20) ol -> . OL_ST list OL_EN
+    (21) ul -> . UL_ST list UL_EN
+
+  ! shift/reduce conflict for UNDERLINE resolved as shift
+  ! shift/reduce conflict for BOLD resolved as shift
+  ! shift/reduce conflict for ITALICS resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+  ! shift/reduce conflict for OL_ST resolved as shift
+  ! shift/reduce conflict for UL_ST resolved as shift
+    SUBSECTION      reduce using rule 17 (section -> section subsection .)
+    DOCUMENT        reduce using rule 17 (section -> section subsection .)
+    TITLE           reduce using rule 17 (section -> section subsection .)
+    AUTHOR          reduce using rule 17 (section -> section subsection .)
+    BODY            reduce using rule 17 (section -> section subsection .)
+    ENDDOCUMENT     reduce using rule 17 (section -> section subsection .)
+    SECTION         reduce using rule 17 (section -> section subsection .)
+    UNDERLINE       shift and go to state 14
+    BOLD            shift and go to state 17
+    ITALICS         shift and go to state 1
+    TEXT            shift and go to state 3
+    OL_ST           shift and go to state 6
+    UL_ST           shift and go to state 5
+
+  ! UNDERLINE       [ reduce using rule 17 (section -> section subsection .) ]
+  ! BOLD            [ reduce using rule 17 (section -> section subsection .) ]
+  ! ITALICS         [ reduce using rule 17 (section -> section subsection .) ]
+  ! TEXT            [ reduce using rule 17 (section -> section subsection .) ]
+  ! OL_ST           [ reduce using rule 17 (section -> section subsection .) ]
+  ! UL_ST           [ reduce using rule 17 (section -> section subsection .) ]
+
+    ol                             shift and go to state 18
+    sentence                       shift and go to state 39
+    ul                             shift and go to state 19
+    subsectioncon                  shift and go to state 40
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for TEXT in state 2 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 2 resolved as shift
+WARNING: shift/reduce conflict for UNDERLINE in state 3 resolved as shift
+WARNING: shift/reduce conflict for BOLD in state 3 resolved as shift
+WARNING: shift/reduce conflict for ITALICS in state 3 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 3 resolved as shift
+WARNING: shift/reduce conflict for UNDERLINE in state 13 resolved as shift
+WARNING: shift/reduce conflict for BOLD in state 13 resolved as shift
+WARNING: shift/reduce conflict for ITALICS in state 13 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 13 resolved as shift
+WARNING: shift/reduce conflict for UL_ST in state 13 resolved as shift
+WARNING: shift/reduce conflict for OL_ST in state 13 resolved as shift
+WARNING: shift/reduce conflict for UNDERLINE in state 15 resolved as shift
+WARNING: shift/reduce conflict for BOLD in state 15 resolved as shift
+WARNING: shift/reduce conflict for ITALICS in state 15 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 15 resolved as shift
+WARNING: shift/reduce conflict for OL_ST in state 15 resolved as shift
+WARNING: shift/reduce conflict for UL_ST in state 15 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 23 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 30 resolved as shift
+WARNING: shift/reduce conflict for UNDERLINE in state 31 resolved as shift
+WARNING: shift/reduce conflict for BOLD in state 31 resolved as shift
+WARNING: shift/reduce conflict for ITALICS in state 31 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 31 resolved as shift
+WARNING: shift/reduce conflict for OL_ST in state 31 resolved as shift
+WARNING: shift/reduce conflict for UL_ST in state 31 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 37 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 39 resolved as shift
+WARNING: shift/reduce conflict for UNDERLINE in state 40 resolved as shift
+WARNING: shift/reduce conflict for BOLD in state 40 resolved as shift
+WARNING: shift/reduce conflict for ITALICS in state 40 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 40 resolved as shift
+WARNING: shift/reduce conflict for UL_ST in state 40 resolved as shift
+WARNING: shift/reduce conflict for OL_ST in state 40 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 58 resolved as shift
+WARNING: shift/reduce conflict for SUBSECTION in state 59 resolved as shift
+WARNING: shift/reduce conflict for UNDERLINE in state 59 resolved as shift
+WARNING: shift/reduce conflict for BOLD in state 59 resolved as shift
+WARNING: shift/reduce conflict for ITALICS in state 59 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 59 resolved as shift
+WARNING: shift/reduce conflict for OL_ST in state 59 resolved as shift
+WARNING: shift/reduce conflict for UL_ST in state 59 resolved as shift
+WARNING: shift/reduce conflict for UNDERLINE in state 60 resolved as shift
+WARNING: shift/reduce conflict for BOLD in state 60 resolved as shift
+WARNING: shift/reduce conflict for ITALICS in state 60 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 60 resolved as shift
+WARNING: shift/reduce conflict for OL_ST in state 60 resolved as shift
+WARNING: shift/reduce conflict for UL_ST in state 60 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 61 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 62 resolved as shift
+WARNING: shift/reduce conflict for UNDERLINE in state 63 resolved as shift
+WARNING: shift/reduce conflict for BOLD in state 63 resolved as shift
+WARNING: shift/reduce conflict for ITALICS in state 63 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 63 resolved as shift
+WARNING: shift/reduce conflict for OL_ST in state 63 resolved as shift
+WARNING: shift/reduce conflict for UL_ST in state 63 resolved as shift
+WARNING: reduce/reduce conflict in state 2 resolved using rule (subsectioncon -> sentence)
+WARNING: rejected rule (section -> sentence) in state 2
+WARNING: reduce/reduce conflict in state 30 resolved using rule (subsectioncon -> sentence)
+WARNING: rejected rule (section -> sentence) in state 30
+WARNING: reduce/reduce conflict in state 31 resolved using rule (section -> section subsection)
+WARNING: rejected rule (section -> subsection) in state 31
+WARNING: Rule (section -> sentence) is never reduced
